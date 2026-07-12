@@ -226,6 +226,30 @@
     padding:12px 24px;border-radius:100px;font-size:.92rem;transition:filter .15s}
   .shoutout a:hover,.shoutout a:focus-visible{filter:brightness(1.12);outline:none}
 
+  .trivia-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow);max-width:600px;margin:0 auto 18px}
+  .tv-label{display:block;font-weight:700;font-size:.85rem;color:var(--ink-soft);margin-bottom:6px}
+  .tv-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .trivia-card input{font-family:inherit;font-size:1rem;padding:12px 14px;border:1px solid var(--line);border-radius:12px;color:var(--ink);width:100%}
+  .trivia-card input:focus{outline:2px solid var(--blue);outline-offset:1px}
+  .tv-row input{flex:1;min-width:150px;width:auto}
+  .tv-row .game-btn{margin-top:0}
+  #tv-add-card input{margin-bottom:10px}
+  .tv-hud{display:flex;justify-content:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+  .tv-q{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.22rem;line-height:1.3;margin-bottom:14px;color:var(--ink)}
+  .tv-feedback{margin-top:12px;font-weight:700;min-height:1.2em}
+  .tv-feedback.ok{color:var(--cyan)}
+  .tv-feedback.no{color:var(--raspberry)}
+  .tv-secondary{margin-top:14px;background:var(--blue-deep)}
+  .tv-empty{text-align:center;color:var(--ink-soft);font-weight:600;padding:8px 0}
+  .tv-note{margin-top:10px;color:var(--ink-soft);font-size:.85rem;font-weight:600}
+  .tv-h3{font-size:1.3rem;margin-bottom:14px}
+  .tv-options{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+  .tv-opt{font-family:inherit;font-size:1rem;font-weight:600;text-align:left;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}
+  .tv-opt:hover:not(:disabled){border-color:var(--blue)}
+  .tv-opt:disabled{cursor:default}
+  .tv-opt.ok{border-color:var(--cyan);background:rgba(8,166,184,.14)}
+  .tv-opt.no{border-color:var(--raspberry);background:rgba(245,52,138,.1)}
+
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.w-a,.w-b{animation:none}.reveal{opacity:1;transform:none;transition:none}}
@@ -244,6 +268,7 @@
     <button type="button" data-target="info">Info</button>
     <button type="button" data-target="photos">Photos</button>
     <button type="button" data-target="game">Games</button>
+    <button type="button" data-target="trivia">Trivia</button>
     <button type="button" data-target="contacts">Contacts</button>
   </div>
 </nav>
@@ -634,6 +659,62 @@
   </div>
 </section>
 
+<!-- TRIVIA -->
+<section id="trivia">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Test your family smarts</p>
+      <h2>Family Trivia</h2>
+      <p>Answer questions the family writes — and add your own for everyone else. Each question counts once, and new ones keep popping up as people add them, so your score climbs all weekend.</p>
+    </div>
+
+    <div class="trivia-card reveal">
+      <div id="tv-gate">
+        <label class="tv-label" for="tv-name">Your name</label>
+        <div class="tv-row">
+          <input id="tv-name" type="text" maxlength="24" placeholder="Enter your name" autocomplete="off">
+          <button type="button" class="game-btn" id="tv-start">Start</button>
+        </div>
+        <p class="tv-note" id="tv-gate-note">Your score is saved to this name — use the same one each time.</p>
+      </div>
+
+      <div id="tv-play" hidden>
+        <div class="tv-hud">
+          <div class="hud-item">Score <b id="tv-score">0</b></div>
+          <div class="hud-item">Answered <b id="tv-answered">0</b></div>
+          <div class="hud-item">Left <b id="tv-remaining">0</b></div>
+        </div>
+        <div id="tv-question-wrap">
+          <p class="tv-q" id="tv-q">Loading…</p>
+          <div class="tv-options" id="tv-options"></div>
+          <p class="tv-feedback" id="tv-feedback"></p>
+          <button type="button" class="game-btn tv-secondary" id="tv-next" hidden>Next question ›</button>
+        </div>
+        <div id="tv-empty" hidden>
+          <p class="tv-empty">🎉 You're all caught up! Add a question below, or check back as the family adds more.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="trivia-card reveal" id="tv-add-card" hidden>
+      <h3 class="tv-h3">✍️ Add a question</h3>
+      <input id="tv-newq" type="text" maxlength="200" placeholder="Your question (e.g. Where did Grandma &amp; Grandpa meet?)" autocomplete="off">
+      <input id="tv-newa" type="text" maxlength="80" placeholder="✓ Correct answer" autocomplete="off">
+      <input id="tv-w1" type="text" maxlength="80" placeholder="Wrong answer" autocomplete="off">
+      <input id="tv-w2" type="text" maxlength="80" placeholder="Wrong answer" autocomplete="off">
+      <input id="tv-w3" type="text" maxlength="80" placeholder="Wrong answer (optional)" autocomplete="off">
+      <button type="button" class="game-btn" id="tv-addbtn">Add question</button>
+      <p class="tv-note" id="tv-add-note">Give the correct answer plus at least two wrong ones — they'll be shuffled for everyone. You won't be quizzed on your own questions.</p>
+    </div>
+
+    <div class="leaderboard reveal">
+      <h3>🧠 Trivia Leaderboard</h3>
+      <ol id="tv-board"><li class="lb-empty">Enter your name above to play.</li></ol>
+      <p class="lb-note" id="tv-board-note"></p>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACTS -->
 <footer id="contacts">
   <div class="wrap">
@@ -853,6 +934,90 @@
       var r = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({top:0, behavior: r ? 'auto' : 'smooth'});
     });
+  })();
+
+  // Family Trivia (multiple choice)
+  (function(){
+    var gate = document.getElementById('tv-gate'); if(!gate) return;
+    var API = '/.netlify/functions/trivia';
+    var play = document.getElementById('tv-play'), nameIn = document.getElementById('tv-name'), startBtn = document.getElementById('tv-start'),
+        scoreEl = document.getElementById('tv-score'), answeredEl = document.getElementById('tv-answered'), remainingEl = document.getElementById('tv-remaining'),
+        qWrap = document.getElementById('tv-question-wrap'), qEl = document.getElementById('tv-q'), optionsEl = document.getElementById('tv-options'),
+        feedback = document.getElementById('tv-feedback'), nextBtn = document.getElementById('tv-next'), emptyEl = document.getElementById('tv-empty'),
+        addCard = document.getElementById('tv-add-card'), newQ = document.getElementById('tv-newq'), newA = document.getElementById('tv-newa'),
+        w1 = document.getElementById('tv-w1'), w2 = document.getElementById('tv-w2'), w3 = document.getElementById('tv-w3'),
+        addBtn = document.getElementById('tv-addbtn'), addNote = document.getElementById('tv-add-note'),
+        boardEl = document.getElementById('tv-board'), boardNote = document.getElementById('tv-board-note'), gateNote = document.getElementById('tv-gate-note');
+    var player = '', current = null, locked = false;
+    function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+    function norm(s){ return String(s||'').toLowerCase().trim().replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim(); }
+    function renderBoard(list){
+      if(!list || !list.length){ boardEl.innerHTML='<li class="lb-empty">No scores yet — be the first!</li>'; return; }
+      boardEl.innerHTML = list.slice(0,10).map(function(r,i){
+        var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+        return '<li><span class="lb-rank">'+medal+'</span><span class="lb-name">'+esc(r.name)+'</span><span class="lb-score">'+r.score+'</span></li>';
+      }).join('');
+    }
+    function renderOptions(opts){
+      optionsEl.innerHTML='';
+      (opts||[]).forEach(function(opt){
+        var b = document.createElement('button'); b.type='button'; b.className='tv-opt'; b.textContent=opt; b.setAttribute('data-val',opt);
+        b.addEventListener('click', function(){ choose(opt, b); });
+        optionsEl.appendChild(b);
+      });
+    }
+    function showQuestion(q){
+      feedback.textContent=''; feedback.className='tv-feedback'; nextBtn.hidden=true; locked=false;
+      if(q){ current=q; qEl.textContent=q.q; renderOptions(q.options); qWrap.hidden=false; emptyEl.hidden=true; }
+      else { current=null; qWrap.hidden=true; emptyEl.hidden=false; }
+    }
+    function loadState(){
+      fetch(API + '?player=' + encodeURIComponent(player))
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(d){
+          scoreEl.textContent=d.score||0; answeredEl.textContent=d.answeredCount||0; remainingEl.textContent=d.remaining||0;
+          renderBoard(d.leaderboard); showQuestion(d.question); addCard.hidden=false; boardNote.textContent='';
+        })
+        .catch(function(){ boardNote.textContent='Trivia goes live once the site is deployed to Netlify.'; addCard.hidden=false; });
+    }
+    function start(){
+      var nm=(nameIn.value||'').trim().slice(0,24);
+      if(!nm){ nameIn.focus(); gateNote.textContent='Enter a name to play.'; return; }
+      player=nm; gate.hidden=true; play.hidden=false; loadState();
+    }
+    function choose(val, btn){
+      if(locked || !current) return; locked=true;
+      Array.prototype.forEach.call(optionsEl.children, function(b){ b.disabled=true; });
+      fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'answer', player:player, id:current.id, answer:val }) })
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(d){
+          scoreEl.textContent=d.score||0; remainingEl.textContent=d.remaining||0;
+          answeredEl.textContent=(parseInt(answeredEl.textContent,10)||0)+1;
+          Array.prototype.forEach.call(optionsEl.children, function(b){ if(norm(b.getAttribute('data-val'))===norm(d.correctAnswer)) b.classList.add('ok'); });
+          if(d.correct){ feedback.textContent='✅ Correct!'; feedback.className='tv-feedback ok'; }
+          else { btn.classList.add('no'); feedback.textContent='❌ Not quite!'; feedback.className='tv-feedback no'; }
+          renderBoard(d.leaderboard); current=d.question;
+          if(d.question){ nextBtn.hidden=false; } else { setTimeout(function(){ showQuestion(null); }, 1400); }
+        })
+        .catch(function(){ feedback.textContent='Could not submit — works once deployed to Netlify.'; feedback.className='tv-feedback no';
+          Array.prototype.forEach.call(optionsEl.children, function(b){ b.disabled=false; }); locked=false; });
+    }
+    function add(){
+      var q=(newQ.value||'').trim(), a=(newA.value||'').trim();
+      var wrong=[w1.value,w2.value,w3.value].map(function(x){return (x||'').trim();}).filter(Boolean);
+      if(!q || !a){ addNote.textContent='Add a question and the correct answer.'; return; }
+      if(wrong.length < 2){ addNote.textContent='Add at least two wrong answers.'; return; }
+      addBtn.disabled=true; addBtn.textContent='Adding…';
+      fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'add', player:player||'Someone', q:q, answer:a, wrong:wrong }) })
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(){ newQ.value='';newA.value='';w1.value='';w2.value='';w3.value=''; addNote.textContent='Added! The family can answer it now. 🎉'; })
+        .catch(function(){ addNote.textContent='Could not add — works once deployed to Netlify.'; })
+        .then(function(){ addBtn.disabled=false; addBtn.textContent='Add question'; });
+    }
+    startBtn.addEventListener('click', start);
+    nameIn.addEventListener('keydown', function(e){ if(e.key==='Enter'){ start(); } });
+    nextBtn.addEventListener('click', function(){ showQuestion(current); });
+    addBtn.addEventListener('click', add);
   })();
 
   // Scroll reveal
