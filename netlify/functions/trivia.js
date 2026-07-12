@@ -34,8 +34,7 @@ export default async (req) => {
   // Questions this player hasn't answered and didn't write
   const openFor = (questions, rec) => {
     const answered = rec.answered || {};
-    const me = norm(rec.name);
-    return questions.filter((q) => !answered[q.id] && norm(q.author) !== me);
+    return questions.filter((q) => !answered[q.id]);
   };
 
   if (req.method === "GET") {
