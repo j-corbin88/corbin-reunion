@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corbin Family Reunion · Massanutten 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A2540;--ink-soft:#4A5B7A;--sky:#EEF6FF;--white:#FFFFFF;
+    --blue:#2563EB;--blue-deep:#0B3D91;--cyan:#0891B2;--cyan-bright:#22C3E6;
+    --sun:#FFC93C;--line:rgba(10,37,64,.10);--shadow:0 20px 45px -22px rgba(11,61,145,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--white);color:var(--ink);
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+  a{color:inherit}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+  .eyebrow{font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--blue)}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;align-items:center;justify-content:flex-start;padding:8px 22px;overflow-x:auto}
+  @media(min-width:760px){nav .wrap{justify-content:center}}
+  nav button{font-family:inherit;font-weight:700;font-size:.82rem;border:0;background:none;padding:8px 14px;
+    border-radius:100px;white-space:nowrap;color:var(--ink);cursor:pointer;transition:background .15s,color .15s}
+  nav button:hover,nav button:focus-visible{background:var(--blue);color:#fff;outline:none}
+
+  header{position:relative;color:#fff;text-align:center;padding:74px 22px 120px;
+    background:linear-gradient(158deg,#0B3D91 0%,#1D5BE0 48%,#22C3E6 100%);overflow:hidden}
+  .bubble{position:absolute;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
+  .b1{width:180px;height:180px;top:-40px;left:-30px}
+  .b2{width:90px;height:90px;top:60px;right:8%;background:rgba(255,255,255,.1)}
+  .b3{width:50px;height:50px;bottom:150px;left:12%;background:rgba(255,255,255,.14)}
+  header .wrap{position:relative;z-index:2}
+  .tagpill{display:inline-block;background:var(--sun);color:var(--ink);font-weight:800;text-transform:uppercase;
+    letter-spacing:.12em;font-size:.72rem;padding:8px 16px;border-radius:100px}
+  header h1{font-size:clamp(2.8rem,11vw,5.4rem);margin:20px 0 6px;font-weight:800}
+  .place{font-weight:600;font-size:clamp(1rem,4vw,1.3rem);opacity:.95;max-width:30ch;margin:0 auto}
+  .facts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+  .facts span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);padding:9px 16px;border-radius:100px;font-weight:600;font-size:.9rem}
+  .facts b{color:var(--sun);font-weight:800}
+  .countdown{margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;min-height:74px}
+  .cd-box{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:10px 6px;min-width:68px}
+  .cd-box .n{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.7rem;line-height:1;color:#fff}
+  .cd-box .l{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;opacity:.85;margin-top:5px}
+  .cd-done{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.5rem}
+  .waves{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:70px;z-index:1}
+  .waves path{fill:#fff}
+  .w-a{opacity:.5;animation:bob 7s ease-in-out infinite}
+  .w-b{opacity:.75;animation:bob 5s ease-in-out infinite reverse}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  section{padding:64px 0;scroll-margin-top:60px}
+  .tint{background:var(--sky)}
+  .sec-head{margin-bottom:30px;max-width:640px}
+  .sec-head h2{font-size:clamp(2rem,7vw,3.1rem);margin:8px 0 10px}
+  .sec-head p{color:var(--ink-soft);font-size:1.04rem}
+
+  .board{display:grid;gap:20px}
+  @media(min-width:780px){.board{grid-template-columns:repeat(3,1fr)}}
+  .night{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .night .top{padding:20px 22px 18px;color:#fff}
+  .night.thu .top{background:var(--cyan)}
+  .night.fri .top{background:var(--blue)}
+  .night.sat .top{background:var(--blue-deep)}
+  .night .day{font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;opacity:.95}
+  .night .name{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.5rem;margin-top:4px}
+  .night .pick{font-size:.82rem;font-weight:600;opacity:.92;margin-top:6px}
+  .menu{list-style:none;padding:16px 22px 22px;flex:1}
+  .menu li{padding:10px 0;border-bottom:1px solid var(--line)}
+  .menu li:last-child{border-bottom:0}
+  .dish{font-weight:700;display:block}
+  .who{font-size:.84rem;color:var(--ink-soft);font-weight:600}
+  .dinner-note{margin-top:26px;background:linear-gradient(120deg,#0B3D91,#2563EB);color:#fff;border-radius:18px;
+    padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:center;text-align:center;font-weight:600}
+  .dinner-note b{color:var(--sun)}
+
+  .cards{display:grid;gap:18px}
+  @media(min-width:640px){.cards{grid-template-columns:repeat(2,1fr)}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+  .tag{display:inline-block;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;padding:6px 12px;border-radius:100px;color:#fff;margin-bottom:12px}
+  .t-sat{background:var(--blue-deep)}.t-fri{background:var(--blue)}.t-any{background:var(--cyan)}
+  .card h3{font-size:1.4rem;margin-bottom:8px}
+  .card p{color:var(--ink-soft);font-size:.96rem}
+  .card p+p{margin-top:8px}
+  .price{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .price span{background:var(--sky);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-weight:700;font-size:.86rem}
+  .price b{color:var(--blue)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+  .chips span{background:var(--sky);border:1px solid var(--line);border-radius:100px;padding:8px 13px;font-weight:600;font-size:.85rem;color:var(--ink)}
+  .lines{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  .lines a{font-weight:700;font-size:.92rem;text-decoration:none;color:var(--blue);display:inline-flex;align-items:center;gap:8px}
+  .photo-note{margin-top:18px;background:var(--sun);color:var(--ink);border-radius:18px;padding:18px 22px;font-weight:700;box-shadow:var(--shadow);font-size:1.02rem}
+
+  .bring-grid{display:grid;gap:18px}
+  @media(min-width:720px){.bring-grid{grid-template-columns:1fr 1fr}}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+  .panel h3{font-size:1.35rem;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .panel ul{list-style:none}
+  .panel li{padding:10px 0 10px 32px;position:relative;border-bottom:1px solid var(--line);font-weight:500}
+  .panel li:last-child{border-bottom:0}
+  .provides li::before{content:"✓";position:absolute;left:2px;font-weight:800;color:var(--cyan)}
+  .check li{cursor:pointer;user-select:none;transition:color .15s}
+  .check li::before{content:"○";position:absolute;left:2px;font-weight:800;color:var(--blue);transition:color .15s}
+  .check li.done{color:var(--ink-soft);text-decoration:line-through}
+  .check li.done::before{content:"✓";color:var(--cyan)}
+  .progress{margin-top:14px;font-weight:800;color:var(--blue)}
+  .helper-note{margin-top:18px;background:#fff;border:1px dashed var(--blue);border-radius:16px;padding:16px 20px;font-weight:600;color:var(--ink)}
+  .helper-note b{color:var(--blue)}
+
+  .forecast{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:22px}
+  @media(min-width:640px){.forecast{grid-template-columns:repeat(4,1fr)}}
+  .wx{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 12px;text-align:center;box-shadow:var(--shadow)}
+  .wx .d{font-weight:800;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
+  .wx .ico{font-size:2rem;margin:6px 0}
+  .wx .t{font-weight:800}
+  .wx .lo{color:var(--ink-soft)}
+  .wx .p{font-size:.78rem;color:var(--blue);font-weight:700;margin-top:4px}
+  .wx-note{grid-column:1/-1;color:var(--ink-soft);font-size:.92rem}
+  .wx-note a{color:var(--blue);font-weight:700}
+  .fx-head{font-size:1.3rem;margin-bottom:12px}
+
+  .dir-btns{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .info .dir-btns a{background:var(--blue);color:#fff;text-decoration:none;font-weight:700;padding:12px 15px;border-radius:12px;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.92rem}
+  .info .dir-btns a small{font-weight:600;opacity:.85;color:#fff}
+
+  .info-grid{display:grid;gap:18px}
+  @media(min-width:640px){.info-grid{grid-template-columns:1fr 1fr}}
+  .info{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+  .info h3{font-size:1.18rem;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .info h3 .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .info p{font-size:.94rem;color:var(--ink-soft);margin-bottom:6px}
+  .info a{font-weight:700;color:var(--blue);text-decoration:none}
+  .info strong{color:var(--ink)}
+
+  footer{background:linear-gradient(160deg,#0B3D91,#123a86);color:#fff;padding:58px 0 44px;text-align:center}
+  footer h2{font-size:clamp(1.9rem,6vw,2.7rem);margin-bottom:6px}
+  footer .sub{opacity:.8;margin-bottom:30px}
+  .contacts{display:grid;gap:12px;max-width:600px;margin:0 auto;text-align:left}
+  @media(min-width:560px){.contacts{grid-template-columns:1fr 1fr}}
+  .contact{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:14px 16px;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:#fff;transition:background .15s}
+  .contact:hover,.contact:focus-visible{background:rgba(255,255,255,.2);outline:none}
+  .contact .role{font-weight:700}
+  .contact .role small{display:block;font-weight:500;opacity:.72;font-size:.78rem}
+  .contact .num{font-weight:800;color:var(--sun);white-space:nowrap;font-size:.9rem}
+  .signoff{margin-top:34px;font-weight:700;opacity:.9;font-family:'Bricolage Grotesque'}
+
+  .album{background:linear-gradient(150deg,#0B3D91,#2563EB 60%,#22C3E6);color:#fff;border-radius:22px;padding:36px 26px;text-align:center;box-shadow:var(--shadow)}
+  .album-emoji{font-size:2.6rem}
+  .album h3{font-size:1.55rem;margin:6px 0 8px;color:#fff}
+  .album p{opacity:.94;max-width:48ch;margin:0 auto 20px;font-size:1rem}
+  .album-btn{display:inline-block;background:var(--sun);color:var(--ink);font-weight:800;text-decoration:none;padding:14px 28px;border-radius:100px;font-size:1rem;transition:filter .15s}
+  .album-btn:hover,.album-btn:focus-visible{filter:brightness(1.06);outline:none}
+
+  .game-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow);text-align:center;max-width:560px;margin:0 auto}
+  .game-hud{display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .hud-item{background:var(--sky);border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-weight:600;color:var(--ink-soft);font-size:.9rem}
+  .hud-item b{color:var(--blue);font-size:1.1rem;margin-left:5px}
+  .game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .spot{position:relative;height:96px;background:linear-gradient(180deg,#EAF3FF,#D5E8FF);border-radius:14px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+  .sofa{font-size:2.5rem;position:relative;z-index:2;pointer-events:none;line-height:1;margin-bottom:-2px}
+  .pop{position:absolute;bottom:26px;left:50%;transform:translate(-50%,150%);z-index:1;border:0;background:none;cursor:pointer;font-size:2rem;line-height:1;padding:0;transition:transform .12s ease}
+  .pop.up{transform:translate(-50%,0)}
+  .pop.hit{transform:translate(-50%,-4px) scale(1.25)}
+  .game-btn{margin-top:18px;background:var(--blue);color:#fff;border:0;font-family:inherit;font-weight:800;padding:13px 28px;border-radius:100px;font-size:1rem;cursor:pointer;transition:filter .15s}
+  .game-btn:hover:not(:disabled){filter:brightness(1.06)}
+  .game-btn:disabled{opacity:.7;cursor:default}
+  .game-msg{margin-top:12px;color:var(--ink-soft);font-weight:600;font-size:.92rem;min-height:1.2em}
+  .lb-save{margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .lb-save input{font-family:inherit;font-size:1rem;padding:12px 14px;border:1px solid var(--line);border-radius:12px;min-width:190px;color:var(--ink)}
+  .lb-save input:focus{outline:2px solid var(--blue);outline-offset:1px}
+  .leaderboard{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow);max-width:560px;margin:18px auto 0}
+  .leaderboard h3{font-size:1.35rem;margin-bottom:14px;text-align:center}
+  .leaderboard ol{list-style:none}
+  .leaderboard li{display:flex;align-items:center;gap:12px;padding:11px 6px;border-bottom:1px solid var(--line)}
+  .leaderboard li:last-child{border-bottom:0}
+  .lb-rank{width:34px;font-weight:800;color:var(--blue);font-size:1rem;text-align:center;flex:none}
+  .leaderboard .lb-name{flex:1;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lb-score{font-weight:800;color:var(--blue)}
+  .lb-empty{justify-content:center;color:var(--ink-soft);font-weight:600}
+  .lb-note{margin-top:12px;text-align:center;color:var(--ink-soft);font-size:.88rem;font-weight:600;min-height:1em}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.w-a,.w-b{animation:none}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <button type="button" data-target="dinners">Dinners</button>
+    <button type="button" data-target="activities">Activities</button>
+    <button type="button" data-target="adventure">Adventure Park</button>
+    <button type="button" data-target="eat">Eat</button>
+    <button type="button" data-target="bring">Bring</button>
+    <button type="button" data-target="info">Info</button>
+    <button type="button" data-target="photos">Photos</button>
+    <button type="button" data-target="game">Games</button>
+  </div>
+</nav>
+
+<header>
+  <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span>
+  <div class="wrap">
+    <span class="tagpill">Summer in the mountains</span>
+    <h1>Corbin Family Reunion</h1>
+    <p class="place">Massanutten Resort · Woodstone Meadow Condos · Virginia</p>
+    <div class="facts">
+      <span><b>July 16–19</b>, 2026</span>
+      <span>Thursday → Sunday</span>
+      <span>Check-in <b>5:00 PM</b></span>
+    </div>
+    <div class="countdown" id="countdown" aria-label="Countdown to the reunion"></div>
+  </div>
+  <svg class="waves" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
+    <path class="w-a" d="M0,38 C200,66 400,10 600,34 C800,58 1000,14 1200,40 L1200,70 L0,70 Z"></path>
+    <path class="w-b" d="M0,48 C220,74 420,24 640,46 C860,68 1040,30 1200,52 L1200,70 L0,70 Z"></path>
+  </svg>
+</header>
+
+<!-- DINNERS -->
+<section id="dinners">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">The main event</p>
+      <h2>Family Dinner Every Night</h2>
+      <p>Three nights, three feasts — every dish is already spoken for. Find your name and bring your part!</p>
+    </div>
+    <div class="board">
+      <div class="night thu reveal">
+        <div class="top"><p class="day">Thursday · July 16</p><p class="name">Corbin Cookout</p><p class="pick">Fire up the grill</p></div>
+        <ul class="menu">
+          <li><span class="dish">Spiedies &amp; bread</span><span class="who">Jim C.</span></li>
+          <li><span class="dish">Hamburgers &amp; fixin's</span><span class="who">Josh &amp; Jordan</span></li>
+          <li><span class="dish">Hot dogs &amp; fixin's</span><span class="who">Josh &amp; Jordan</span></li>
+          <li><span class="dish">Grilled veggies</span><span class="who">Cyn</span></li>
+          <li><span class="dish">Chips (all the varieties)</span><span class="who">Rebekah, Tina, Theresa &amp; Jess</span></li>
+          <li><span class="dish">Pasta salad</span><span class="who">Cyn</span></li>
+          <li><span class="dish">Dessert</span><span class="who">Dave</span></li>
+        </ul>
+      </div>
+      <div class="night fri reveal">
+        <div class="top"><p class="day">Friday · July 17</p><p class="name">Ciro's Italian Night</p><p class="pick">Pick-up 5:00 PM</p></div>
+        <ul class="menu">
+          <li><span class="dish">Chicken parm</span></li>
+          <li><span class="dish">Butter pasta</span></li>
+          <li><span class="dish">Meatballs</span></li>
+          <li><span class="dish">Baked rigatoni</span></li>
+          <li><span class="dish">Bread</span></li>
+          <li><span class="dish">Caesar salad</span><span class="who">Tina, Theresa &amp; Jess</span></li>
+          <li><span class="dish">Greens &amp; beans</span><span class="who">Cynthia</span></li>
+          <li><span class="dish">Dessert</span><span class="who">Jordan &amp; Shelley</span></li>
+        </ul>
+      </div>
+      <div class="night sat reveal">
+        <div class="top"><p class="day">Saturday · July 18</p><p class="name">Hank's BBQ</p><p class="pick">Pick-up 5:00 PM</p></div>
+        <ul class="menu">
+          <li><span class="dish">Chicken BBQ</span></li>
+          <li><span class="dish">Beef brisket</span></li>
+          <li><span class="dish">Baked beans</span></li>
+          <li><span class="dish">Potato salad</span></li>
+          <li><span class="dish">Buns</span></li>
+          <li><span class="dish">Caesar salad</span><span class="who">Melissa &amp; Mixi</span></li>
+          <li><span class="dish">All the leftover salads</span></li>
+          <li><span class="dish">Dessert</span><span class="who">Ruthie</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="dinner-note reveal">
+      <span>🍽️ Dinners at <b>5:00 PM</b></span>
+      <span>Plates, cups, napkins &amp; silverware provided</span>
+      <span>Clean ice provided — just <b>bring your own drinks</b></span>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Fill your days</p>
+      <h2>Things to Do</h2>
+      <p>Breakfast and lunch are on your own — the rest of the day is wide open.</p>
+    </div>
+    <div class="cards">
+      <div class="card reveal">
+        <span class="tag t-sat">Saturday</span>
+        <h3>Massanutten Waterpark 🌊</h3>
+        <p>Indoor <em>and</em> outdoor park with waterslides, a lazy river and a wave pool. The indoor side feels a lot like Great Wolf Lodge.</p>
+        <div class="price"><span><b>$52</b> per person</span><span><b>$20</b> observer</span><span><b>Free</b> under 2</span></div>
+        <p>Theresa Ludwigsen has the group rate — text her which day and how many tickets, and she'll send her Venmo.</p>
+        <div class="lines"><a href="https://www.massresort.com/play/waterpark/" target="_blank" rel="noopener noreferrer">🔗 Waterpark info &amp; hours</a></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-fri">Friday</span>
+        <h3>Golf ⛳</h3>
+        <p>Jim Corbin is coordinating tee times — best to reserve about two weeks ahead.</p>
+        <div class="lines">
+          <a href="tel:5704930569">📞 Jim Corbin · 570-493-0569</a>
+          <a href="tel:5402899441">📞 Pro Shop · 540-289-9441</a>
+          <a href="https://www.massresort.com/play/golf/" target="_blank" rel="noopener noreferrer">🔗 Golf courses &amp; tee times</a>
+        </div>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-any">Anytime</span>
+        <h3>Local Hikes 🥾</h3>
+        <p>Jim Corbin is planning the trail outings. Look for the sign-up sheet at the pavilion.</p>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-any">Every Evening</span>
+        <h3>The Pavilion 🎶</h3>
+        <p>We gather at <strong>The James E. Lambert</strong> pavilion for games, singing and hanging out, with an outdoor pool right nearby. The metal picnic tables aren't the comfiest — bring a camp chair or blanket for the lawn.</p>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-any">Included &amp; free</span>
+        <h3>Summer programming 🎬</h3>
+        <p>Your stay includes free season-long programming — outdoor movie nights, live music, and family fun nights around the resort.</p>
+        <div class="lines"><a href="https://www.massresort.com/explore/entertainment-dining-calendar/" target="_blank" rel="noopener noreferrer">🔗 Events calendar</a></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-fri">Book ahead</span>
+        <h3>Markets &amp; classes 🧺</h3>
+        <p>The Farmers Market runs Wednesdays 9am–12pm (1850 Meadow Vista Lane) — catch it if anyone arrives early. The Concierge also books wine tastings, cooking demos and classes.</p>
+        <div class="lines"><a href="tel:5402894978">📞 Concierge · 540-289-4978</a></div>
+      </div>
+    </div>
+    <div class="photo-note reveal">📸 <strong>Saturday night = Family Picture!</strong> The whole family together — please don't disappear after dinner.</div>
+    <div class="card reveal" style="margin-top:18px">
+      <span class="tag t-fri">More ideas</span>
+      <h3>Explore the Resort</h3>
+      <p>There's plenty more around the mountain — pull up the full resort map or browse activities on the Massanutten site.</p>
+      <div class="lines">
+        <a href="https://www.massresort.com/explore/our-resort/resort-map/" target="_blank" rel="noopener noreferrer">🗺️ Full resort map</a>
+        <a href="https://www.massresort.com/" target="_blank" rel="noopener noreferrer">🔗 massresort.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVENTURE PARK -->
+<section id="adventure">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Up at the ski area</p>
+      <h2>Family Adventure Park</h2>
+      <p>A whole mountain of extra fun a short drive from the condos — great for the kids and the daredevils.</p>
+    </div>
+    <div class="card reveal">
+      <div class="chips">
+        <span>🎢 Mountain coaster (~25 mph)</span>
+        <span>🧗 Climbing wall + Quick Jump</span>
+        <span>🛷 Summer tubing</span>
+        <span>🚡 Zip lines &amp; canopy tour</span>
+        <span>💎 Gem mining</span>
+        <span>⛳ Mini golf</span>
+        <span>🧒 Kids' Adventure Course (12 &amp; under)</span>
+        <span>🚠 Scenic chairlift</span>
+      </div>
+      <p>Summer tubing runs about <strong>$10 for 2 rides</strong> or <strong>$14 for 4</strong>. Most attractions are priced individually, and a waiver is required (a parent signs for anyone under 18).</p>
+      <p><strong>Good to know:</strong> it's at 3827 Massanutten Dr (up in the ski area), usually open about <strong>10am–4pm</strong>, and appears to be <strong>closed Thursdays</strong> — so plan it for Friday, Saturday or Sunday. It's weather-dependent, so check before you head up.</p>
+      <div class="lines">
+        <a href="https://www.massresort.com/play/family-adventure-park/" target="_blank" rel="noopener noreferrer">🔗 Adventure Park info</a>
+        <a href="https://www.massresort.com/play/family-adventure-park/hours-and-rates/" target="_blank" rel="noopener noreferrer">🕑 Hours &amp; rates</a>
+        <a href="tel:5402894022">📞 540-289-4022</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EAT -->
+<section id="eat" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Beyond family dinners</p>
+      <h2>Where to Eat</h2>
+      <p>Breakfast and lunch are on your own — here are the on-site spots and a few local favorites.</p>
+    </div>
+    <div class="cards">
+      <div class="card reveal">
+        <span class="tag t-fri">On the resort</span>
+        <h3>On-site dining 🍕</h3>
+        <p><strong>Campfire Grill</strong> — pizza, skillets &amp; s'mores (reservations 540-289-5794).</p>
+        <p><strong>Virginia BBQ &amp; Pizza Co.</strong> — wood-smoked chicken, pork &amp; ribs.</p>
+        <p><strong>Base Camp</strong> — indoor/outdoor bar &amp; grill at the ski lodge.</p>
+        <p><strong>Hideaway Lounge</strong> — full-service bar right inside the WaterPark.</p>
+        <div class="lines"><a href="https://www.massresort.com/dine/" target="_blank" rel="noopener noreferrer">🔗 All resort dining</a></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-any">Just off resort</span>
+        <h3>Local favorites 🍔</h3>
+        <p>Fun fact: your Friday and Saturday caterers — <strong>Ciro's Italian Eatery</strong> and <strong>Hank's Grille &amp; Catering</strong> — are local Massanutten spots.</p>
+        <p>Also worth a trip: <strong>Jack Brown's</strong> burgers and <strong>Romano's Italian Bistro</strong> in Harrisonburg, and <strong>Kline's Ice Cream</strong> in McGaheysville.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TO BRING -->
+<section id="bring">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Pack smart</p>
+      <h2>What to Bring</h2>
+      <p>Tap each item as you pack it. Woodstone Meadow stocks the basics, so you only need the essentials below.</p>
+    </div>
+    <div class="bring-grid">
+      <div class="panel reveal">
+        <h3>🎒 Pack these yourself</h3>
+        <ul class="check" id="packlist">
+          <li>Coffee &amp; coffee filters</li>
+          <li>Bath tissue</li>
+          <li>Laundry detergent</li>
+          <li>Pool / waterpark towels</li>
+          <li>Salt &amp; pepper</li>
+          <li>Your own drinks for family dinners</li>
+          <li>A camp, beach or pool chair (or blanket) for pavilion evenings</li>
+        </ul>
+        <p class="progress" id="packprog">0 packed</p>
+      </div>
+      <div class="panel reveal">
+        <h3>🏠 The condo provides</h3>
+        <ul class="provides">
+          <li>Bed linens</li>
+          <li>Towel sets (based on occupancy)</li>
+          <li>Kitchen linens — 2 dishcloths, 2 dish towels, 2 potholders</li>
+          <li>Starter pack — bath soap, dish soap, dishwasher detergent, paper towels, trash liners</li>
+          <li>Pack-'n-plays &amp; highchairs on request (fees &amp; availability)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="helper-note reveal">🙌 <b>Thanks, Melissa Lalley</b> — bringing large trash bags &amp; empty gallon containers for the group.</div>
+  </div>
+</section>
+
+<!-- GOOD TO KNOW -->
+<section id="info" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">The details</p>
+      <h2>Good to Know</h2>
+    </div>
+
+    <div class="reveal">
+      <h3 class="fx-head">Weekend forecast</h3>
+      <div class="forecast" id="forecast"><p class="wx-note">Loading the latest forecast…</p></div>
+    </div>
+
+    <div class="info reveal" style="margin-bottom:18px">
+      <h3><span class="dot" style="background:var(--blue)"></span>Getting There</h3>
+      <p>Massanutten Resort · Massanutten, VA 22840. Tap for turn-by-turn directions to the right lobby:</p>
+      <div class="dir-btns">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=1822%20Resort%20Dr%20Massanutten%20VA%2022840" target="_blank" rel="noopener noreferrer"><span>North Lobby · 1822 Resort Dr</span><small>Mon–Thu ›</small></a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=1816%20Resort%20Dr%20Massanutten%20VA%2022840" target="_blank" rel="noopener noreferrer"><span>South Lobby · 1816 Resort Dr</span><small>Fri–Sun ›</small></a>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--cyan)"></span>Checking In</h3>
+        <p>Check-in is <strong>5:00 PM</strong>. You can arrive earlier at the front desk, but your room may not be ready.</p>
+        <p><strong>Mon–Thu:</strong> North Lobby (open 24 hrs) · 1822 Resort Dr.</p>
+        <p><strong>Fri–Sun:</strong> South Lobby (4–9 PM) · 1816 Resort Dr.</p>
+        <p><a href="https://www.massresort.com/upload/photos/page_187_woodstone-meadows-map-2023.pdf" target="_blank" rel="noopener noreferrer">🗺️ Woodstone Meadow map (PDF)</a></p>
+      </div>
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--blue)"></span>Checking Out</h3>
+        <p>Departure day is <strong>Sunday</strong>. Check-out is <strong>10:00 AM</strong> — before you close the door, text <strong>"Check Out"</strong> to <a href="sms:8889844342">888-984-4342</a>.</p>
+        <p>Late checkout is charged at the half-day rate — call <a href="tel:5402894032">540-289-4032</a> or the front desk at <a href="tel:5402899441">540-289-9441</a>.</p>
+      </div>
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--blue-deep)"></span>Condo Balance</h3>
+        <p>Balance was due <strong>July 10</strong>. Full payment is charged automatically 7 days before arrival unless you make other arrangements.</p>
+        <p>Questions? Call HarleyJean at <a href="tel:5404172358">540-417-2358</a>.</p>
+      </div>
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--sun)"></span>Groceries &amp; Meals</h3>
+        <p>Breakfast &amp; lunch are on your own; dinners are together at 5.</p>
+        <p>Stores nearby: <strong>Food Lion</strong> (Elkton) &amp; <strong>Martin's</strong> (Harrisonburg).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOS -->
+<section id="photos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Say cheese</p>
+      <h2>Share the Memories</h2>
+      <p>One shared album for the whole weekend — add your photos and videos so everyone goes home with copies of the good stuff.</p>
+    </div>
+    <div class="album reveal">
+      <div class="album-emoji">📸</div>
+      <h3>Corbin Reunion 2026 — Shared Album</h3>
+      <p>Anyone with the link can view <em>and</em> add. Snap all weekend (don't forget the Saturday night family picture!), then drop everything in here.</p>
+      <a class="album-btn" href="https://photos.app.goo.gl/E7UR8q7iGqNKrU767" target="_blank" rel="noopener noreferrer">Open the family album ›</a>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="game" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Just for fun</p>
+      <h2>Marshmallow Madness 🍡</h2>
+      <p>Warm up that throwing arm before the reunion. Family members keep popping out from behind the sofas — tag each one with a marshmallow before they duck back down!</p>
+    </div>
+    <div class="game-card reveal">
+      <div class="game-hud">
+        <div class="hud-item">Score <b id="g-score">0</b></div>
+        <div class="hud-item">Time <b id="g-time">30</b></div>
+        <div class="hud-item">Best <b id="g-best">0</b></div>
+      </div>
+      <div class="game-grid" id="g-grid" aria-label="Marshmallow game board"></div>
+      <button type="button" class="game-btn" id="g-start">Start throwing</button>
+      <p class="game-msg" id="g-msg">Tap “Start throwing” for a 30-second practice round.</p>
+      <div class="lb-save" id="lb-save" hidden>
+        <input id="lb-name" type="text" maxlength="20" placeholder="Enter your name" autocomplete="off">
+        <button type="button" class="game-btn" id="lb-submit">Save score</button>
+      </div>
+    </div>
+    <div class="leaderboard reveal">
+      <h3>🏆 Leaderboard</h3>
+      <ol id="lb-list"><li class="lb-empty">Loading…</li></ol>
+      <p class="lb-note" id="lb-note"></p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<footer id="contacts">
+  <div class="wrap">
+    <h2>Who to Call</h2>
+    <p class="sub">Save these before you head out.</p>
+    <div class="contacts">
+      <a class="contact" href="tel:5704930569"><span class="role">Jim Corbin<small>Golf &amp; hikes</small></span><span class="num">570-493-0569</span></a>
+      <a class="contact" href="tel:5404172358"><span class="role">HarleyJean<small>Condo payments</small></span><span class="num">540-417-2358</span></a>
+      <a class="contact" href="tel:5402899441"><span class="role">Golf Pro Shop<small>Tee times</small></span><span class="num">540-289-9441</span></a>
+      <a class="contact" href="tel:5402894978"><span class="role">Concierge<small>Activities &amp; classes</small></span><span class="num">540-289-4978</span></a>
+      <a class="contact" href="tel:5402894032"><span class="role">Resort Desk<small>Late checkout</small></span><span class="num">540-289-4032</span></a>
+      <div class="contact" style="cursor:default"><span class="role">Theresa Ludwigsen<small>Waterpark tickets &amp; Venmo</small></span><span class="num">🌊</span></div>
+    </div>
+    <p class="signoff">See you in the mountains! · Corbin Family Reunion 2026</p>
+  </div>
+</footer>
+
+<script>
+  // Smooth in-page scrolling; also center the tapped tab in the nav
+  var navWrap = document.querySelector('nav .wrap');
+  document.querySelectorAll('nav button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var r = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(navWrap){
+        var b = btn.getBoundingClientRect(), w = navWrap.getBoundingClientRect();
+        var target = navWrap.scrollLeft + (b.left - w.left) - (navWrap.clientWidth - btn.offsetWidth)/2;
+        navWrap.scrollTo({left: target, behavior: r ? 'auto' : 'smooth'});
+      }
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      if(el){ el.scrollIntoView({behavior: r ? 'auto' : 'smooth', block: 'start'}); }
+    });
+  });
+
+  // Countdown to Thursday, July 16, 2026, 5:00 PM ET
+  (function(){
+    var el = document.getElementById('countdown'); if(!el) return;
+    var target = new Date('2026-07-16T17:00:00-04:00').getTime();
+    function box(n,l){ return '<div class="cd-box"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'; }
+    var t = setInterval(tick, 1000);
+    function tick(){
+      var diff = target - Date.now();
+      if(diff <= 0){ el.innerHTML = '<div class="cd-done">🎉 It\'s reunion time!</div>'; clearInterval(t); return; }
+      var d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000),
+          m = Math.floor(diff%3600000/60000), s = Math.floor(diff%60000/1000);
+      el.innerHTML = box(d,'Days')+box(h,'Hrs')+box(m,'Min')+box(s,'Sec');
+    }
+    tick();
+  })();
+
+  // Live weather for the reunion dates (Open-Meteo, no key needed)
+  (function(){
+    var wrap = document.getElementById('forecast'); if(!wrap) return;
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=38.353&longitude=-78.710'
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max'
+      + '&temperature_unit=fahrenheit&timezone=America%2FNew_York&start_date=2026-07-16&end_date=2026-07-19';
+    var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    function icon(c){
+      if(c===0) return '☀️'; if(c<=2) return '🌤️'; if(c===3) return '☁️';
+      if(c===45||c===48) return '🌫️'; if(c>=51&&c<=57) return '🌦️';
+      if(c>=61&&c<=67) return '🌧️'; if(c>=71&&c<=77) return '🌨️';
+      if(c>=80&&c<=82) return '🌦️'; if(c>=95) return '⛈️'; return '🌡️';
+    }
+    fetch(url).then(function(r){ return r.json(); }).then(function(d){
+      if(!d.daily || !d.daily.time || !d.daily.time.length) throw 0;
+      var html = '';
+      d.daily.time.forEach(function(t,i){
+        var dt = new Date(t+'T12:00:00');
+        var lbl = days[dt.getDay()]+' '+(dt.getMonth()+1)+'/'+dt.getDate();
+        var pp = d.daily.precipitation_probability_max[i];
+        html += '<div class="wx"><div class="d">'+lbl+'</div>'
+          + '<div class="ico">'+icon(d.daily.weather_code[i])+'</div>'
+          + '<div class="t">'+Math.round(d.daily.temperature_2m_max[i])+'° <span class="lo">/ '+Math.round(d.daily.temperature_2m_min[i])+'°</span></div>'
+          + '<div class="p">💧 '+(pp==null?'—':pp+'%')+'</div></div>';
+      });
+      wrap.innerHTML = html;
+    }).catch(function(){
+      wrap.innerHTML = '<p class="wx-note">The live forecast appears once we\'re within about two weeks of the trip. In the meantime, check the <a href="https://forecast.weather.gov/MapClick.php?lat=38.353&lon=-78.710" target="_blank" rel="noopener noreferrer">National Weather Service forecast</a>.</p>';
+    });
+  })();
+
+  // Tap-off packing list (resets on refresh)
+  (function(){
+    var items = document.querySelectorAll('#packlist li');
+    var prog = document.getElementById('packprog'); if(!items.length || !prog) return;
+    function update(){ prog.textContent = document.querySelectorAll('#packlist li.done').length + ' of ' + items.length + ' packed'; }
+    items.forEach(function(li){ li.addEventListener('click', function(){ li.classList.toggle('done'); update(); }); });
+    update();
+  })();
+
+  // Marshmallow Madness mini-game
+  (function(){
+    var grid = document.getElementById('g-grid'); if(!grid) return;
+    var scoreEl = document.getElementById('g-score'), timeEl = document.getElementById('g-time'),
+        bestEl = document.getElementById('g-best'), startBtn = document.getElementById('g-start'), msg = document.getElementById('g-msg');
+    var faces = ['🙂','😃','😄','😁','😆','😎','🤠','🥳','👦','👧','👨','👩','👴','👵','🧒'];
+    var N = 6, spots = [], score = 0, time = 30, best = 0, running = false, popTimer, tickTimer;
+    for(var i=0;i<N;i++){
+      var spot = document.createElement('div'); spot.className = 'spot';
+      var pop = document.createElement('button'); pop.className = 'pop'; pop.type = 'button';
+      pop.setAttribute('aria-label','Hit with a marshmallow'); pop.textContent = '🙂';
+      pop.addEventListener('click', hit);
+      var sofa = document.createElement('div'); sofa.className = 'sofa'; sofa.textContent = '🛋️';
+      spot.appendChild(pop); spot.appendChild(sofa); grid.appendChild(spot); spots.push(pop);
+    }
+    function rand(a){ return a[Math.floor(Math.random()*a.length)]; }
+    function hit(e){
+      var p = e.currentTarget;
+      if(!running || !p.classList.contains('up') || p.dataset.hit === '1') return;
+      p.dataset.hit = '1'; p.textContent = '💥'; p.classList.add('hit');
+      score++; scoreEl.textContent = score;
+      setTimeout(function(){ p.classList.remove('up','hit'); p.dataset.hit = ''; }, 170);
+    }
+    function popOne(){
+      if(!running) return;
+      var free = spots.filter(function(p){ return !p.classList.contains('up'); });
+      if(free.length){
+        var p = rand(free); p.textContent = rand(faces); p.dataset.hit = ''; p.classList.add('up');
+        var dur = 650 + Math.random()*650;
+        setTimeout(function(){ if(p.dataset.hit !== '1'){ p.classList.remove('up'); } }, dur);
+      }
+      popTimer = setTimeout(popOne, 360 + Math.random()*420);
+    }
+    function tick(){ time--; timeEl.textContent = time; if(time <= 0){ end(); } }
+    function start(){
+      if(running) return;
+      score = 0; time = 30; scoreEl.textContent = '0'; timeEl.textContent = '30';
+      running = true; startBtn.textContent = 'Throwing…'; startBtn.disabled = true;
+      msg.textContent = 'Go! Tag everyone who pops up! 🍡';
+      popOne(); tickTimer = setInterval(tick, 1000);
+    }
+    function end(){
+      running = false; clearTimeout(popTimer); clearInterval(tickTimer);
+      spots.forEach(function(p){ p.classList.remove('up','hit'); p.dataset.hit=''; });
+      if(score > best){ best = score; bestEl.textContent = best; msg.textContent = '🏆 New best: ' + score + '! Great arm.'; }
+      else { msg.textContent = 'Round over — you tagged ' + score + '. Tap to go again!'; }
+      startBtn.textContent = 'Throw again'; startBtn.disabled = false;
+      showSave(score);
+    }
+    var API = '/.netlify/functions/leaderboard';
+    var saveBox = document.getElementById('lb-save'), nameIn = document.getElementById('lb-name'),
+        submitBtn = document.getElementById('lb-submit'), listEl = document.getElementById('lb-list'), noteEl = document.getElementById('lb-note');
+    var pendingScore = 0;
+    function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    function showSave(s){
+      if(!saveBox) return;
+      if(s > 0){ pendingScore = s; saveBox.hidden = false; if(nameIn) nameIn.focus(); }
+      else { saveBox.hidden = true; }
+    }
+    function render(list){
+      if(!listEl) return;
+      if(!list || !list.length){ listEl.innerHTML = '<li class="lb-empty">No scores yet — be the first!</li>'; return; }
+      listEl.innerHTML = list.slice(0,10).map(function(r,i){
+        var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+        return '<li><span class="lb-rank">'+medal+'</span><span class="lb-name">'+esc(r.name)+'</span><span class="lb-score">'+r.score+'</span></li>';
+      }).join('');
+    }
+    function loadBoard(){
+      if(!listEl) return;
+      fetch(API).then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(d){ render(d); if(noteEl) noteEl.textContent=''; })
+        .catch(function(){ listEl.innerHTML=''; if(noteEl) noteEl.textContent='The leaderboard goes live once the site is deployed to Netlify.'; });
+    }
+    if(submitBtn){
+      submitBtn.addEventListener('click', function(){
+        var nm = (nameIn && nameIn.value ? nameIn.value : '').trim().slice(0,20);
+        if(!nm){ if(nameIn) nameIn.focus(); if(noteEl) noteEl.textContent='Enter a name to save your score.'; return; }
+        submitBtn.disabled = true; submitBtn.textContent = 'Saving…';
+        fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name: nm, score: pendingScore }) })
+          .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+          .then(function(d){ render(d); saveBox.hidden = true; if(nameIn) nameIn.value=''; if(noteEl) noteEl.textContent='Saved! 🎉'; })
+          .catch(function(){ if(noteEl) noteEl.textContent='Could not save — this works once the site is on Netlify.'; })
+          .then(function(){ submitBtn.disabled = false; submitBtn.textContent = 'Save score'; });
+      });
+    }
+    loadBoard();
+
+    startBtn.addEventListener('click', start);
+  })();
+
+  // Scroll reveal
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+</script>
+</body>
+</html>
