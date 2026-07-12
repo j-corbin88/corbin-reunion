@@ -46,7 +46,7 @@
   .cd-box{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:10px 6px;min-width:68px}
   .cd-box .n{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.7rem;line-height:1;color:#fff}
   .cd-box .l{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;opacity:.85;margin-top:5px}
-  .cd-done{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.5rem}
+  .cd-done{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.2rem;line-height:1.35;max-width:34ch;margin:4px auto 0}
   .waves{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:70px;z-index:1}
   .waves path{fill:#fff}
   .w-a{opacity:.5;animation:bob 7s ease-in-out infinite}
@@ -185,6 +185,37 @@
   .lb-empty{justify-content:center;color:var(--ink-soft);font-weight:600}
   .lb-note{margin-top:12px;text-align:center;color:var(--ink-soft);font-size:.88rem;font-weight:600;min-height:1em}
 
+  .to-top{position:fixed;right:18px;bottom:18px;z-index:60;width:48px;height:48px;border:0;border-radius:50%;
+    background:var(--blue);color:#fff;font-size:1.5rem;font-weight:800;cursor:pointer;box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(10px);
+    transition:opacity .2s ease,transform .2s ease,filter .15s}
+  .to-top.show{opacity:1;pointer-events:auto;transform:none}
+  .to-top:hover,.to-top:focus-visible{filter:brightness(1.1);outline:none}
+
+  .hero-btn{margin-top:20px;display:inline-block;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.5);
+    color:#fff;font-family:inherit;font-weight:800;font-size:.92rem;padding:11px 22px;border-radius:100px;cursor:pointer;transition:background .15s}
+  .hero-btn:hover,.hero-btn:focus-visible{background:rgba(255,255,255,.28);outline:none}
+
+  .sched{display:grid;gap:18px}
+  @media(min-width:760px){.sched{grid-template-columns:1fr 1fr}}
+  .sched-day{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+  .sd-head{padding:16px 20px;color:#fff;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .sd-head.thu{background:var(--cyan)}
+  .sd-head.fri{background:var(--blue)}
+  .sd-head.sat{background:var(--blue-deep)}
+  .sd-head.sun{background:var(--sun);color:var(--ink)}
+  .sd-num{font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;background:rgba(255,255,255,.22);padding:4px 9px;border-radius:100px}
+  .sd-head.sun .sd-num{background:rgba(10,37,64,.14)}
+  .sd-head h3{font-size:1.2rem;margin:0}
+  .sd-sub{font-weight:700;font-size:.78rem;opacity:.9;margin-left:auto}
+  .sd-list{list-style:none;padding:12px 20px 18px}
+  .sd-list li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .sd-list li:last-child{border-bottom:0}
+  .sd-time{flex:none;min-width:76px;font-weight:800;font-size:.72rem;color:#fff;background:var(--blue);border-radius:8px;padding:6px 8px;text-align:center;line-height:1.25}
+  .sd-time.sd-flex{background:var(--sky);color:var(--ink-soft);border:1px solid var(--line)}
+  .sd-act{font-size:.92rem;font-weight:500;color:var(--ink);padding-top:1px}
+  .sd-act b{font-weight:800}
+
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.w-a,.w-b{animation:none}.reveal{opacity:1;transform:none;transition:none}}
@@ -194,6 +225,7 @@
 
 <nav>
   <div class="wrap">
+    <button type="button" data-target="schedule">Schedule</button>
     <button type="button" data-target="dinners">Dinners</button>
     <button type="button" data-target="activities">Activities</button>
     <button type="button" data-target="adventure">Adventure Park</button>
@@ -217,12 +249,62 @@
       <span>Check-in <b>5:00 PM</b></span>
     </div>
     <div class="countdown" id="countdown" aria-label="Countdown to the reunion"></div>
+    <button type="button" class="hero-btn" data-target="schedule">📅 View schedule</button>
   </div>
   <svg class="waves" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
     <path class="w-a" d="M0,38 C200,66 400,10 600,34 C800,58 1000,14 1200,40 L1200,70 L0,70 Z"></path>
     <path class="w-b" d="M0,48 C220,74 420,24 640,46 C860,68 1040,30 1200,52 L1200,70 L0,70 Z"></path>
   </svg>
 </header>
+
+<!-- SCHEDULE -->
+<section id="schedule" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Day by day</p>
+      <h2>The Plan</h2>
+      <p>A loose game plan for the weekend. Family dinners are at 5 PM each night — times below are firm where shown and flexible everywhere else.</p>
+    </div>
+    <div class="sched">
+      <div class="sched-day reveal">
+        <div class="sd-head thu"><span class="sd-num">Day 1</span><h3>Thursday · July 16</h3><span class="sd-sub">Arrival</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Check-in opens</b> — North Lobby, 1822 Resort Dr</span></li>
+          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Corbin Cookout</b> — burgers, dogs &amp; spiedies at the pavilion</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Games &amp; singing at the pavilion</span></li>
+        </ul>
+      </div>
+
+      <div class="sched-day reveal">
+        <div class="sd-head fri"><span class="sd-num">Day 2</span><h3>Friday · July 17</h3><span class="sd-sub">Golf day</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time sd-flex">Daytime</span><span class="sd-act"><b>Golf</b> — Jim Corbin coordinating tee times</span></li>
+          <li><span class="sd-time sd-flex">10–4</span><span class="sd-act">Family Adventure Park open (coaster, tubing, mini golf)</span></li>
+          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Ciro's Italian night</b> — pick-up at 5</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Pavilion hangout</span></li>
+        </ul>
+      </div>
+
+      <div class="sched-day reveal">
+        <div class="sd-head sat"><span class="sd-num">Day 3</span><h3>Saturday · July 18</h3><span class="sd-sub">Waterpark day</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time sd-flex">Daytime</span><span class="sd-act"><b>Waterpark</b> — Theresa's group tickets</span></li>
+          <li><span class="sd-time sd-flex">10–4</span><span class="sd-act">Family Adventure Park open</span></li>
+          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Hank's BBQ</b> — pick-up at 5</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act"><b>📸 Family photo!</b> — plus pavilion games</span></li>
+        </ul>
+      </div>
+
+      <div class="sched-day reveal">
+        <div class="sd-head sun"><span class="sd-num">Day 4</span><h3>Sunday · July 19</h3><span class="sd-sub">Departure</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time">By 10 AM</span><span class="sd-act"><b>Check-out</b> — text “Check Out” to 888-984-4342</span></li>
+          <li><span class="sd-time sd-flex">—</span><span class="sd-act">Safe travels home! 👋</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- DINNERS -->
 <section id="dinners">
@@ -303,7 +385,6 @@
         <p>Jim Corbin is coordinating tee times — best to reserve about two weeks ahead.</p>
         <div class="lines">
           <a href="tel:5704930569">📞 Jim Corbin · 570-493-0569</a>
-          <a href="tel:5402899441">📞 Pro Shop · 540-289-9441</a>
           <a href="https://www.massresort.com/play/golf/" target="_blank" rel="noopener noreferrer">🔗 Golf courses &amp; tee times</a>
         </div>
       </div>
@@ -542,7 +623,6 @@
     <div class="contacts">
       <a class="contact" href="tel:5704930569"><span class="role">Jim Corbin<small>Golf &amp; hikes</small></span><span class="num">570-493-0569</span></a>
       <a class="contact" href="tel:5404172358"><span class="role">HarleyJean<small>Condo payments</small></span><span class="num">540-417-2358</span></a>
-      <a class="contact" href="tel:5402899441"><span class="role">Golf Pro Shop<small>Tee times</small></span><span class="num">540-289-9441</span></a>
       <a class="contact" href="tel:5402894978"><span class="role">Concierge<small>Activities &amp; classes</small></span><span class="num">540-289-4978</span></a>
       <a class="contact" href="tel:5402894032"><span class="role">Resort Desk<small>Late checkout</small></span><span class="num">540-289-4032</span></a>
       <div class="contact" style="cursor:default"><span class="role">Theresa Ludwigsen<small>Waterpark tickets &amp; Venmo</small></span><span class="num">🌊</span></div>
@@ -550,6 +630,8 @@
     <p class="signoff">See you in the mountains! · Corbin Family Reunion 2026</p>
   </div>
 </footer>
+
+<button type="button" id="toTop" class="to-top" aria-label="Back to top">↑</button>
 
 <script>
   // Smooth in-page scrolling; also center the tapped tab in the nav
@@ -567,20 +649,43 @@
     });
   });
 
-  // Countdown to Thursday, July 16, 2026, 5:00 PM ET
+  // Hero "View schedule" button
+  var heroBtn = document.querySelector('.hero-btn');
+  if(heroBtn){
+    heroBtn.addEventListener('click', function(){
+      var r = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var el = document.getElementById(heroBtn.getAttribute('data-target'));
+      if(el){ el.scrollIntoView({behavior: r ? 'auto' : 'smooth', block: 'start'}); }
+    });
+  }
+
+  // Countdown → live "happening now" → post-event sign-off
   (function(){
     var el = document.getElementById('countdown'); if(!el) return;
-    var target = new Date('2026-07-16T17:00:00-04:00').getTime();
+    var START = new Date('2026-07-16T17:00:00-04:00').getTime(); // Thu check-in + cookout
+    var FRI   = new Date('2026-07-17T00:00:00-04:00').getTime();
+    var SAT   = new Date('2026-07-18T00:00:00-04:00').getTime();
+    var SUN   = new Date('2026-07-19T00:00:00-04:00').getTime();
+    var END   = new Date('2026-07-19T11:00:00-04:00').getTime(); // after Sun check-out
     function box(n,l){ return '<div class="cd-box"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'; }
-    var t = setInterval(tick, 1000);
+    function msg(t){ return '<div class="cd-done">'+t+'</div>'; }
+    var last = '';
+    function render(key, html){ if(key !== last){ last = key; el.innerHTML = html; } }
     function tick(){
-      var diff = target - Date.now();
-      if(diff <= 0){ el.innerHTML = '<div class="cd-done">🎉 It\'s reunion time!</div>'; clearInterval(t); return; }
-      var d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000),
-          m = Math.floor(diff%3600000/60000), s = Math.floor(diff%60000/1000);
-      el.innerHTML = box(d,'Days')+box(h,'Hrs')+box(m,'Min')+box(s,'Sec');
+      var now = Date.now();
+      if(now < START){
+        var diff = START - now;
+        var d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000),
+            m = Math.floor(diff%3600000/60000), s = Math.floor(diff%60000/1000);
+        el.innerHTML = box(d,'Days')+box(h,'Hrs')+box(m,'Min')+box(s,'Sec'); last = 'count';
+      }
+      else if(now < FRI) render('thu', msg('🎉 We\'re here! Day 1 — Corbin Cookout at the pavilion, 5 PM.'));
+      else if(now < SAT) render('fri', msg('⛳ Day 2 — Golf today &amp; Ciro\'s Italian night at 5.'));
+      else if(now < SUN) render('sat', msg('🌊 Day 3 — Waterpark, Hank\'s BBQ at 5 &amp; family photo tonight!'));
+      else if(now < END) render('sun', msg('👋 Day 4 — safe travels home! Check-out by 10 AM.'));
+      else               render('done', msg('💙 Thanks for a great reunion — see you next time!'));
     }
-    tick();
+    tick(); setInterval(tick, 1000);
   })();
 
   // Live weather for the reunion dates (Open-Meteo, no key needed)
@@ -711,6 +816,17 @@
     loadBoard();
 
     startBtn.addEventListener('click', start);
+  })();
+
+  // Floating back-to-top button
+  (function(){
+    var btn = document.getElementById('toTop'); if(!btn) return;
+    function onScroll(){ if(window.scrollY > 500){ btn.classList.add('show'); } else { btn.classList.remove('show'); } }
+    window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+    btn.addEventListener('click', function(){
+      var r = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({top:0, behavior: r ? 'auto' : 'smooth'});
+    });
   })();
 
   // Scroll reveal
