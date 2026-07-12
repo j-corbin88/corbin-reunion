@@ -69,6 +69,9 @@
   .night .day{font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;opacity:.95}
   .night .name{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.5rem;margin-top:4px}
   .night .pick{font-size:.82rem;font-weight:600;opacity:.92;margin-top:6px}
+  .night .loc{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:.78rem;font-weight:700;
+    color:#fff;text-decoration:none;background:rgba(255,255,255,.2);padding:6px 11px;border-radius:100px;transition:background .15s}
+  .night .loc:hover,.night .loc:focus-visible{background:rgba(255,255,255,.34);outline:none}
   .menu{list-style:none;padding:16px 22px 22px;flex:1}
   .menu li{padding:10px 0;border-bottom:1px solid var(--line)}
   .menu li:last-child{border-bottom:0}
@@ -269,9 +272,10 @@
       <div class="sched-day reveal">
         <div class="sd-head thu"><span class="sd-num">Day 1</span><h3>Thursday · July 16</h3><span class="sd-sub">Arrival</span></div>
         <ul class="sd-list">
+          <li><span class="sd-time sd-flex">Early</span><span class="sd-act"><b>Early arrivals</b> — meet at the outdoor pool &amp; pavilion</span></li>
           <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Check-in opens</b> — North Lobby, 1822 Resort Dr</span></li>
-          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Corbin Cookout</b> — burgers, dogs &amp; spiedies at the pavilion</span></li>
-          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Games &amp; singing at the pavilion</span></li>
+          <li><span class="sd-time">6:00 PM</span><span class="sd-act"><b>Corbin Cookout</b> — burgers, dogs &amp; spiedies at the pavilion</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Games &amp; singing at the pavilion — Susie's got the games</span></li>
         </ul>
       </div>
 
@@ -280,7 +284,7 @@
         <ul class="sd-list">
           <li><span class="sd-time sd-flex">Daytime</span><span class="sd-act"><b>Golf</b> — Jim Corbin coordinating tee times</span></li>
           <li><span class="sd-time sd-flex">10–4</span><span class="sd-act">Family Adventure Park open (coaster, tubing, mini golf)</span></li>
-          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Ciro's Italian night</b> — pick-up at 5</span></li>
+          <li><span class="sd-time">6:00 PM</span><span class="sd-act"><b>Ciro's Italian night</b> at the pavilion</span></li>
           <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Pavilion hangout</span></li>
         </ul>
       </div>
@@ -290,8 +294,9 @@
         <ul class="sd-list">
           <li><span class="sd-time sd-flex">Daytime</span><span class="sd-act"><b>Waterpark</b> — Theresa's group tickets</span></li>
           <li><span class="sd-time sd-flex">10–4</span><span class="sd-act">Family Adventure Park open</span></li>
-          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Hank's BBQ</b> — pick-up at 5</span></li>
-          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act"><b>📸 Family photo!</b> — plus pavilion games</span></li>
+          <li><span class="sd-time sd-flex">Before 6</span><span class="sd-act"><b>📸 Family photo!</b> — everyone together before dinner</span></li>
+          <li><span class="sd-time">6:00 PM</span><span class="sd-act"><b>Hank's BBQ</b> dinner at the pavilion</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Pavilion games &amp; hangout</span></li>
         </ul>
       </div>
 
@@ -316,7 +321,7 @@
     </div>
     <div class="board">
       <div class="night thu reveal">
-        <div class="top"><p class="day">Thursday · July 16</p><p class="name">Corbin Cookout</p><p class="pick">Fire up the grill</p></div>
+        <div class="top"><p class="day">Thursday · July 16</p><p class="name">Corbin Cookout</p><p class="pick">Dinner 6:00 PM</p><a class="loc" href="https://www.google.com/maps/search/?api=1&query=James%20E%20Lambert%20Park%20Massanutten%20Resort%20VA" target="_blank" rel="noopener noreferrer">📍 The James E. Lambert pavilion</a></div>
         <ul class="menu">
           <li><span class="dish">Spiedies &amp; bread</span><span class="who">Jim C.</span></li>
           <li><span class="dish">Hamburgers &amp; fixin's</span><span class="who">Josh &amp; Jordan</span></li>
@@ -328,7 +333,7 @@
         </ul>
       </div>
       <div class="night fri reveal">
-        <div class="top"><p class="day">Friday · July 17</p><p class="name">Ciro's Italian Night</p><p class="pick">Pick-up 5:00 PM</p></div>
+        <div class="top"><p class="day">Friday · July 17</p><p class="name">Ciro's Italian Night</p><p class="pick">Dinner 6:00 PM</p><a class="loc" href="https://www.google.com/maps/search/?api=1&query=James%20E%20Lambert%20Park%20Massanutten%20Resort%20VA" target="_blank" rel="noopener noreferrer">📍 The James E. Lambert pavilion</a></div>
         <ul class="menu">
           <li><span class="dish">Chicken parm</span></li>
           <li><span class="dish">Butter pasta</span></li>
@@ -341,7 +346,7 @@
         </ul>
       </div>
       <div class="night sat reveal">
-        <div class="top"><p class="day">Saturday · July 18</p><p class="name">Hank's BBQ</p><p class="pick">Pick-up 5:00 PM</p></div>
+        <div class="top"><p class="day">Saturday · July 18</p><p class="name">Hank's BBQ</p><p class="pick">Dinner 6:00 PM</p><a class="loc" href="https://www.google.com/maps/search/?api=1&query=James%20E%20Lambert%20Park%20Massanutten%20Resort%20VA" target="_blank" rel="noopener noreferrer">📍 The James E. Lambert pavilion</a></div>
         <ul class="menu">
           <li><span class="dish">Chicken BBQ</span></li>
           <li><span class="dish">Beef brisket</span></li>
@@ -355,7 +360,7 @@
       </div>
     </div>
     <div class="dinner-note reveal">
-      <span>🍽️ Dinners at <b>5:00 PM</b></span>
+      <span>🍽️ Dinners at <b>6:00 PM</b></span>
       <span>Plates, cups, napkins &amp; silverware provided</span>
       <span>Clean ice provided — just <b>bring your own drinks</b></span>
     </div>
@@ -396,7 +401,7 @@
       <div class="card reveal">
         <span class="tag t-any">Every Evening</span>
         <h3>The Pavilion 🎶</h3>
-        <p>We gather at <strong>The James E. Lambert</strong> pavilion for games, singing and hanging out, with an outdoor pool right nearby. The metal picnic tables aren't the comfiest — bring a camp chair or blanket for the lawn.</p>
+        <p>We gather at the <strong>James E. Lambert Park pavilion</strong> in the Woodstone Meadows complex — with the outdoor pool right nearby — for games, singing and hanging out. <strong>Susie's in charge of the games</strong>, so come ready to play. The metal picnic tables aren't the comfiest — bring a camp chair or blanket for the lawn.</p>
       </div>
       <div class="card reveal">
         <span class="tag t-any">Included &amp; free</span>
@@ -411,7 +416,7 @@
         <div class="lines"><a href="tel:5402894978">📞 Concierge · 540-289-4978</a></div>
       </div>
     </div>
-    <div class="photo-note reveal">📸 <strong>Saturday night = Family Picture!</strong> The whole family together — please don't disappear after dinner.</div>
+    <div class="photo-note reveal">📸 <strong>Saturday = Family Picture!</strong> We're taking it before the 6 PM dinner — don't wander off beforehand.</div>
     <div class="card reveal" style="margin-top:18px">
       <span class="tag t-fri">More ideas</span>
       <h3>Explore the Resort</h3>
@@ -539,6 +544,7 @@
         <a href="https://www.google.com/maps/dir/?api=1&destination=1822%20Resort%20Dr%20Massanutten%20VA%2022840" target="_blank" rel="noopener noreferrer"><span>North Lobby · 1822 Resort Dr</span><small>Mon–Thu ›</small></a>
         <a href="https://www.google.com/maps/dir/?api=1&destination=1816%20Resort%20Dr%20Massanutten%20VA%2022840" target="_blank" rel="noopener noreferrer"><span>South Lobby · 1816 Resort Dr</span><small>Fri–Sun ›</small></a>
       </div>
+      <p style="margin-top:14px"><a href="https://www.massresort.com/explore/our-resort/resort-map/" target="_blank" rel="noopener noreferrer">🗺️ Full resort map</a> · <a href="https://www.massresort.com/upload/photos/page_187_woodstone-meadows-map-2023.pdf" target="_blank" rel="noopener noreferrer">Woodstone Meadow map (PDF)</a></p>
     </div>
 
     <div class="info-grid">
@@ -579,7 +585,7 @@
     <div class="album reveal">
       <div class="album-emoji">📸</div>
       <h3>Corbin Reunion 2026 — Shared Album</h3>
-      <p>Anyone with the link can view <em>and</em> add. Snap all weekend (don't forget the Saturday night family picture!), then drop everything in here.</p>
+      <p>Anyone with the link can view <em>and</em> add. Snap all weekend (don't forget the Saturday family picture before dinner!), then drop everything in here.</p>
       <a class="album-btn" href="https://photos.app.goo.gl/E7UR8q7iGqNKrU767" target="_blank" rel="noopener noreferrer">Open the family album ›</a>
     </div>
   </div>
@@ -626,6 +632,7 @@
       <a class="contact" href="tel:5402894978"><span class="role">Concierge<small>Activities &amp; classes</small></span><span class="num">540-289-4978</span></a>
       <a class="contact" href="tel:5402894032"><span class="role">Resort Desk<small>Late checkout</small></span><span class="num">540-289-4032</span></a>
       <div class="contact" style="cursor:default"><span class="role">Theresa Ludwigsen<small>Waterpark tickets &amp; Venmo</small></span><span class="num">🌊</span></div>
+      <div class="contact" style="cursor:default"><span class="role">Susie<small>Games &amp; activities</small></span><span class="num">🎲</span></div>
     </div>
     <p class="signoff">See you in the mountains! · Corbin Family Reunion 2026</p>
   </div>
@@ -679,9 +686,9 @@
             m = Math.floor(diff%3600000/60000), s = Math.floor(diff%60000/1000);
         el.innerHTML = box(d,'Days')+box(h,'Hrs')+box(m,'Min')+box(s,'Sec'); last = 'count';
       }
-      else if(now < FRI) render('thu', msg('🎉 We\'re here! Day 1 — Corbin Cookout at the pavilion, 5 PM.'));
-      else if(now < SAT) render('fri', msg('⛳ Day 2 — Golf today &amp; Ciro\'s Italian night at 5.'));
-      else if(now < SUN) render('sat', msg('🌊 Day 3 — Waterpark, Hank\'s BBQ at 5 &amp; family photo tonight!'));
+      else if(now < FRI) render('thu', msg('🎉 We\'re here! Day 1 — Corbin Cookout at the pavilion, 6 PM.'));
+      else if(now < SAT) render('fri', msg('⛳ Day 2 — Golf today &amp; Ciro\'s Italian night at 6.'));
+      else if(now < SUN) render('sat', msg('🌊 Day 3 — Waterpark, family photo, then Hank\'s BBQ at 6!'));
       else if(now < END) render('sun', msg('👋 Day 4 — safe travels home! Check-out by 10 AM.'));
       else               render('done', msg('💙 Thanks for a great reunion — see you next time!'));
     }
