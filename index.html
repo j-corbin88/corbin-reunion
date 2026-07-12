@@ -250,6 +250,35 @@
   .tv-opt.ok{border-color:var(--cyan);background:rgba(8,166,184,.14)}
   .tv-opt.no{border-color:var(--raspberry);background:rgba(245,52,138,.1)}
 
+  .tree-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px 14px;box-shadow:var(--shadow);max-width:640px;margin:0 auto}
+  .tree-toolbar{margin:2px 4px 10px}
+  .tree-hint{font-size:.82rem;color:var(--ink-soft);font-weight:600}
+  .tkids{margin-left:10px;padding-left:12px;border-left:2px solid var(--line)}
+  .trow{display:flex;align-items:center;gap:6px;padding:6px 4px;border-radius:10px}
+  .trow.drop{background:rgba(37,99,235,.12);outline:2px dashed var(--blue)}
+  .tnode.dragging{opacity:.45}
+  .tchev{border:0;background:none;cursor:pointer;font-size:.8rem;color:var(--ink-soft);width:20px;flex:none;padding:2px;font-family:inherit}
+  .tchev-sp{width:20px;flex:none;display:inline-block}
+  .tname{font-weight:700;color:var(--ink);flex:1;font-size:.95rem;line-height:1.3}
+  .tname em{font-weight:600;color:var(--ink-soft);font-style:normal}
+  .tmenu{border:0;background:none;cursor:pointer;color:var(--ink-soft);font-weight:800;font-size:1.15rem;padding:0 8px;border-radius:8px;flex:none;line-height:1}
+  .tmenu:hover{background:var(--sky)}
+  .tnode.collapsed > .tkids{display:none}
+  .tactions{padding:6px 4px 10px 26px}
+  .tact-row{display:flex;flex-wrap:wrap;gap:6px}
+  .tact-row button{font-family:inherit;font-weight:700;font-size:.8rem;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:100px;padding:6px 12px;cursor:pointer}
+  .tact-row button:hover{border-color:var(--blue)}
+  .tact-form{margin-top:8px}
+  .tact-form input[type=text],.tact-form select{font-family:inherit;font-size:.95rem;padding:9px 11px;border:1px solid var(--line);border-radius:10px;width:100%;margin-bottom:8px;color:var(--ink)}
+  .tact-form label{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.9rem;margin-bottom:8px}
+  .tact-form .game-btn{margin-top:0}
+  .tree-note{max-width:640px;margin:14px auto 0;color:var(--ink-soft);font-size:.85rem;font-weight:600;text-align:center;line-height:1.5}
+  .tree-admin{font-weight:700;font-size:.85rem;border-radius:12px;padding:12px 14px;margin-bottom:12px;line-height:1.5}
+  .tree-admin.draft{background:#FFF4D6;color:#7a5b00;border:1px solid #F5D580}
+  .tree-admin.live{background:rgba(8,166,184,.12);color:var(--ink);border:1px solid var(--cyan)}
+  .ta-btn{font-family:inherit;font-weight:800;border:0;border-radius:100px;padding:8px 16px;cursor:pointer;background:var(--blue);color:#fff;margin-left:4px}
+  .ta-btn.go{background:#0BA15A}
+
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.w-a,.w-b{animation:none}.reveal{opacity:1;transform:none;transition:none}}
@@ -269,6 +298,7 @@
     <button type="button" data-target="photos">Photos</button>
     <button type="button" data-target="game">Games</button>
     <button type="button" data-target="trivia">Trivia</button>
+    <button type="button" id="nav-family" data-target="family" style="display:none">Family</button>
     <button type="button" data-target="contacts">Contacts</button>
   </div>
 </nav>
@@ -704,7 +734,7 @@
       <input id="tv-w2" type="text" maxlength="80" placeholder="Wrong answer" autocomplete="off">
       <input id="tv-w3" type="text" maxlength="80" placeholder="Wrong answer (optional)" autocomplete="off">
       <button type="button" class="game-btn" id="tv-addbtn">Add question</button>
-      <p class="tv-note" id="tv-add-note">Give the correct answer plus at least two wrong ones — they'll be shuffled for everyone. You won't be quizzed on your own questions.</p>
+      <p class="tv-note" id="tv-add-note">Give the correct answer plus at least two wrong ones — they'll be shuffled for everyone.</p>
     </div>
 
     <div class="leaderboard reveal">
@@ -712,6 +742,22 @@
       <ol id="tv-board"><li class="lb-empty">Enter your name above to play.</li></ol>
       <p class="lb-note" id="tv-board-note"></p>
     </div>
+  </div>
+</section>
+
+<!-- FAMILY TREE -->
+<section id="family" class="tint" style="display:none">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Who's who</p>
+      <h2>Family Tree</h2>
+      <p>The whole Corbin clan, branch by branch. Tap the <b>⋯</b> next to anyone to add kids, edit, move, or remove them — it's shared, so the family can fill it in and fix it together.</p>
+    </div>
+    <div class="tree-card reveal">
+      <div class="tree-toolbar"><div id="tree-admin"></div><span class="tree-hint" id="tree-hint">Loading the family…</span></div>
+      <div id="tree-root" class="tree"></div>
+    </div>
+    <p class="tree-note reveal">Tip: on a computer, drag a name onto another to move them. On a phone, use ⋯ → Move. Deleting someone bumps their kids up a level.</p>
   </div>
 </section>
 
@@ -1010,7 +1056,7 @@
       addBtn.disabled=true; addBtn.textContent='Adding…';
       fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'add', player:player||'Someone', q:q, answer:a, wrong:wrong }) })
         .then(function(r){ if(!r.ok) throw 0; return r.json(); })
-        .then(function(){ newQ.value='';newA.value='';w1.value='';w2.value='';w3.value=''; addNote.textContent='Added! The family can answer it now. 🎉'; })
+        .then(function(){ newQ.value='';newA.value='';w1.value='';w2.value='';w3.value=''; addNote.textContent='Added! Loading it up… 🎉'; loadState(); })
         .catch(function(){ addNote.textContent='Could not add — works once deployed to Netlify.'; })
         .then(function(){ addBtn.disabled=false; addBtn.textContent='Add question'; });
     }
@@ -1018,6 +1064,113 @@
     nameIn.addEventListener('keydown', function(e){ if(e.key==='Enter'){ start(); } });
     nextBtn.addEventListener('click', function(){ showQuestion(current); });
     addBtn.addEventListener('click', add);
+  })();
+
+  // Family Tree (collaborative)
+  (function(){
+    var root = document.getElementById('tree-root'); if(!root) return;
+    var API = '/.netlify/functions/tree';
+    var hint = document.getElementById('tree-hint');
+    var PEOPLE = [], DRAG = null, LIVE = false;
+    var section = document.getElementById('family'), navBtn = document.getElementById('nav-family'), adminBar = document.getElementById('tree-admin');
+    var ADMIN_KEY = 'corbin2026', isAdmin = false;
+    try { isAdmin = new URLSearchParams(location.search).get('admin') === ADMIN_KEY; } catch(e){}
+    function setVisible(vis){
+      if(section) section.style.display = vis ? '' : 'none';
+      if(navBtn) navBtn.style.display = vis ? '' : 'none';
+      if(vis && section){ Array.prototype.forEach.call(section.querySelectorAll('.reveal'), function(el){ el.classList.add('in'); }); }
+    }
+    function renderAdmin(){
+      if(!adminBar) return;
+      if(!isAdmin){ adminBar.innerHTML=''; return; }
+      adminBar.innerHTML = LIVE
+        ? '<div class="tree-admin live">✅ Live for the whole family. <button type="button" class="ta-btn" data-live="0">Take offline</button></div>'
+        : '<div class="tree-admin draft">🔒 Draft mode — only you can see this (you\'re on the admin link). Edit freely, then: <button type="button" class="ta-btn go" data-live="1">🚀 Go live</button></div>';
+    }
+    function applyState(){ setVisible(LIVE || isAdmin); renderAdmin(); }
+    function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+    function closest(el, sel){ while(el && el!==root.parentNode){ if(el.matches && el.matches(sel)) return el; el=el.parentNode; } return null; }
+    function childrenOf(id){ return PEOPLE.filter(function(p){ return (p.parent||null)===id; }); }
+    function byId(id){ for(var i=0;i<PEOPLE.length;i++){ if(PEOPLE[i].id===id) return PEOPLE[i]; } return null; }
+    function descendants(id){ var set={}; (function walk(i){ childrenOf(i).forEach(function(c){ set[c.id]=1; walk(c.id); }); })(id); return set; }
+
+    function nodeEl(p){
+      var kids = childrenOf(p.id);
+      var node = document.createElement('div'); node.className='tnode'; node.setAttribute('data-id',p.id); node.setAttribute('draggable','true');
+      if(kids.length && p.parent) node.classList.add('collapsed');
+      var row = document.createElement('div'); row.className='trow';
+      var chev = document.createElement('button'); chev.type='button'; chev.className = kids.length ? 'tchev' : 'tchev-sp';
+      if(kids.length) chev.textContent = node.classList.contains('collapsed') ? '▸' : '▾';
+      row.appendChild(chev);
+      var nm = document.createElement('span'); nm.className='tname';
+      nm.innerHTML = esc(p.name) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + (p.spouse?' <em>&amp; '+esc(p.spouse)+'</em>':'');
+      row.appendChild(nm);
+      var menu = document.createElement('button'); menu.type='button'; menu.className='tmenu'; menu.setAttribute('aria-label','Options'); menu.textContent='⋯'; row.appendChild(menu);
+      node.appendChild(row);
+      var actions = document.createElement('div'); actions.className='tactions'; actions.hidden=true; node.appendChild(actions);
+      var kwrap = document.createElement('div'); kwrap.className='tkids';
+      kids.forEach(function(k){ kwrap.appendChild(nodeEl(k)); });
+      node.appendChild(kwrap);
+      return node;
+    }
+    function render(){
+      root.innerHTML='';
+      PEOPLE.filter(function(p){ return !p.parent; }).forEach(function(p){ root.appendChild(nodeEl(p)); });
+      hint.textContent = PEOPLE.length + ' people · tap ⋯ for options, or drag to move';
+    }
+    function load(){
+      fetch(API).then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(d){ PEOPLE=d.people||[]; LIVE=!!d.live; applyState(); if(LIVE||isAdmin) render(); })
+        .catch(function(){ setVisible(true); hint.textContent='The family tree goes live once the site is deployed to Netlify.'; });
+    }
+    function api(body){
+      return fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(d){ if(d.people){ PEOPLE=d.people; render(); } return d; })
+        .catch(function(){ hint.textContent='Change needs the deployed site — try again once it is on Netlify.'; });
+    }
+    function optionList(exclude){
+      var opts = '<option value="">— Top level —</option>';
+      PEOPLE.forEach(function(p){ if(exclude[p.id]) return; opts += '<option value="'+p.id+'">'+esc(p.name)+'</option>'; });
+      return opts;
+    }
+    function openAction(node, act){
+      var id = node.getAttribute('data-id'), p = byId(id);
+      var form = node.querySelector('.tactions .tact-form'); if(!form || !p) return;
+      if(act==='add'){
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40"><button type="button" class="game-btn" data-do="add">Add child</button>';
+      } else if(act==='edit'){
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
+      } else if(act==='move'){
+        var ex = descendants(id); ex[id]=1;
+        form.innerHTML = '<select class="tf-parent">'+optionList(ex)+'</select><button type="button" class="game-btn" data-do="move">Move here</button>';
+      } else if(act==='del'){
+        form.innerHTML = '<p class="tv-note">Delete <b>'+esc(p.name)+'</b>? Any kids move up a level.</p><button type="button" class="game-btn" data-do="delyes" style="background:var(--raspberry)">Delete</button>';
+      }
+    }
+    root.addEventListener('click', function(e){
+      var chev = closest(e.target,'.tchev');
+      if(chev){ var n=closest(chev,'.tnode'); if(n && childrenOf(n.getAttribute('data-id')).length){ n.classList.toggle('collapsed'); chev.textContent=n.classList.contains('collapsed')?'▸':'▾'; } return; }
+      var menu = closest(e.target,'.tmenu');
+      if(menu){ var node=closest(menu,'.tnode'), actions=node.querySelector('.tactions');
+        if(actions.hidden){ actions.hidden=false; actions.innerHTML='<div class="tact-row"><button type="button" data-act="add">➕ Add child</button><button type="button" data-act="edit">✏️ Edit</button><button type="button" data-act="move">↔️ Move</button><button type="button" data-act="del">🗑️ Delete</button></div><div class="tact-form"></div>'; }
+        else { actions.hidden=true; actions.innerHTML=''; } return; }
+      var act = closest(e.target,'[data-act]');
+      if(act){ openAction(closest(act,'.tnode'), act.getAttribute('data-act')); return; }
+      var doBtn = closest(e.target,'[data-do]');
+      if(doBtn){ var node3=closest(doBtn,'.tnode'), id=node3.getAttribute('data-id'), op=doBtn.getAttribute('data-do');
+        if(op==='add'){ var nm=node3.querySelector('.tf-name').value.trim(); if(!nm) return; api({action:'add', name:nm, spouse:node3.querySelector('.tf-spouse').value.trim(), parent:id}); }
+        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), deceased:node3.querySelector('.tf-dec').checked}); }
+        else if(op==='move'){ api({action:'move', id:id, parent:node3.querySelector('.tf-parent').value}); }
+        else if(op==='delyes'){ api({action:'delete', id:id}); }
+      }
+    });
+    root.addEventListener('dragstart', function(e){ var n=closest(e.target,'.tnode'); if(!n) return; DRAG=n.getAttribute('data-id'); n.classList.add('dragging'); if(e.dataTransfer){ e.dataTransfer.effectAllowed='move'; try{ e.dataTransfer.setData('text/plain',DRAG); }catch(x){} } });
+    root.addEventListener('dragend', function(e){ var n=closest(e.target,'.tnode'); if(n) n.classList.remove('dragging'); DRAG=null; Array.prototype.forEach.call(root.querySelectorAll('.trow.drop'),function(r){ r.classList.remove('drop'); }); });
+    root.addEventListener('dragover', function(e){ if(!DRAG) return; var row=closest(e.target,'.trow'); if(!row) return; var n=closest(row,'.tnode'); var tid=n&&n.getAttribute('data-id'); var ex=descendants(DRAG); ex[DRAG]=1; if(tid && !ex[tid]){ e.preventDefault(); Array.prototype.forEach.call(root.querySelectorAll('.trow.drop'),function(r){ r.classList.remove('drop'); }); row.classList.add('drop'); } });
+    root.addEventListener('drop', function(e){ if(!DRAG) return; var n=closest(e.target,'.tnode'); if(!n) return; e.preventDefault(); var tid=n.getAttribute('data-id'); var ex=descendants(DRAG); ex[DRAG]=1; if(tid && !ex[tid]) api({action:'move', id:DRAG, parent:tid}); DRAG=null; });
+    if(adminBar){ adminBar.addEventListener('click', function(e){ var b=e.target.closest && e.target.closest('[data-live]'); if(!b) return; api({action:'setlive', live:b.getAttribute('data-live')==='1', key:ADMIN_KEY}).then(function(d){ if(d && typeof d.live==='boolean'){ LIVE=d.live; applyState(); render(); } }); }); }
+    load();
   })();
 
   // Scroll reveal
