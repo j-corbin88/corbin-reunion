@@ -11,7 +11,7 @@
   :root{
     --ink:#0A2540;--ink-soft:#4A5B7A;--sky:#EEF6FF;--white:#FFFFFF;
     --blue:#2563EB;--blue-deep:#0B3D91;--cyan:#0891B2;--cyan-bright:#22C3E6;
-    --sun:#FFC93C;--line:rgba(10,37,64,.10);--shadow:0 20px 45px -22px rgba(11,61,145,.4);
+    --sun:#FFC93C;--raspberry:#F5348A;--line:rgba(10,37,64,.10);--shadow:0 20px 45px -22px rgba(11,61,145,.4);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--white);color:var(--ink);
@@ -253,14 +253,20 @@
   .tree-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px 14px;box-shadow:var(--shadow);max-width:640px;margin:0 auto}
   .tree-toolbar{margin:2px 4px 10px}
   .tree-hint{font-size:.82rem;color:var(--ink-soft);font-weight:600}
-  .tkids{margin-left:10px;padding-left:12px;border-left:2px solid var(--line)}
-  .trow{display:flex;align-items:center;gap:6px;padding:6px 4px;border-radius:10px}
+  .tkids{margin-left:13px;padding-left:14px;border-left:2px solid var(--branch,var(--line))}
+  .trow{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 6px;border-radius:12px;transition:background .12s}
+  .trow:hover{background:var(--sky)}
   .trow.drop{background:rgba(37,99,235,.12);outline:2px dashed var(--blue)}
   .tnode.dragging{opacity:.45}
-  .tchev{border:0;background:none;cursor:pointer;font-size:.8rem;color:var(--ink-soft);width:20px;flex:none;padding:2px;font-family:inherit}
-  .tchev-sp{width:20px;flex:none;display:inline-block}
+  .tchev{border:0;background:none;cursor:pointer;font-size:.8rem;color:var(--ink-soft);width:18px;flex:none;padding:2px;font-family:inherit}
+  .tchev-sp{width:18px;flex:none;display:inline-block}
+  .tav{width:28px;height:28px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.82rem;line-height:1;box-shadow:0 2px 6px -2px rgba(10,37,64,.4)}
   .tname{font-weight:700;color:var(--ink);flex:1;font-size:.95rem;line-height:1.3}
   .tname em{font-weight:600;color:var(--ink-soft);font-style:normal}
+  .tage{font-weight:700;color:#fff;background:var(--branch,var(--ink-soft));font-size:.72rem;padding:2px 8px;border-radius:100px;margin-left:4px;vertical-align:middle}
+  .tnode-root > .trow{background:linear-gradient(120deg,rgba(37,99,235,.12),rgba(8,145,178,.12));border:1px solid var(--line);margin-bottom:6px;padding:10px 10px 10px 8px}
+  .tnode-root > .trow .tname{font-size:1.06rem}
+  .tnode-root > .trow .tav{width:34px;height:34px;font-size:1rem}
   .tmenu{border:0;background:none;cursor:pointer;color:var(--ink-soft);font-weight:800;font-size:1.15rem;padding:0 8px;border-radius:8px;flex:none;line-height:1}
   .tmenu:hover{background:var(--sky)}
   .tnode.collapsed > .tkids{display:none}
@@ -1093,17 +1099,27 @@
     function childrenOf(id){ return PEOPLE.filter(function(p){ return (p.parent||null)===id; }); }
     function byId(id){ for(var i=0;i<PEOPLE.length;i++){ if(PEOPLE[i].id===id) return PEOPLE[i]; } return null; }
     function descendants(id){ var set={}; (function walk(i){ childrenOf(i).forEach(function(c){ set[c.id]=1; walk(c.id); }); })(id); return set; }
+    var BRANCH = {};
+    function branchHead(p){ if(!p.parent) return null; var cur=p; while(true){ var par=byId(cur.parent); if(!par||!par.parent) return cur; cur=par; } }
+    function computeBranches(){ var C=['#2563EB','#0891B2','#0EA5A5','#0BA15A','#E0952A','#F5734B','#EC4899','#475569']; BRANCH={}; var i=0; PEOPLE.filter(function(p){return !p.parent;}).forEach(function(r){ childrenOf(r.id).forEach(function(h){ BRANCH[h.id]=C[i%C.length]; i++; }); }); }
 
     function nodeEl(p){
       var kids = childrenOf(p.id);
       var node = document.createElement('div'); node.className='tnode'; node.setAttribute('data-id',p.id); node.setAttribute('draggable','true');
+      var head = branchHead(p); var color = head ? (BRANCH[head.id]||'#64748B') : '#334155';
+      node.style.setProperty('--branch', color);
+      if(!p.parent) node.classList.add('tnode-root');
       if(kids.length && p.parent) node.classList.add('collapsed');
       var row = document.createElement('div'); row.className='trow';
-      var chev = document.createElement('button'); chev.type='button'; chev.className = kids.length ? 'tchev' : 'tchev-sp';
-      if(kids.length) chev.textContent = node.classList.contains('collapsed') ? '▸' : '▾';
+      var chev;
+      if(kids.length){ chev=document.createElement('button'); chev.type='button'; chev.className='tchev'; chev.textContent=node.classList.contains('collapsed')?'▸':'▾'; }
+      else { chev=document.createElement('span'); chev.className='tchev-sp'; }
       row.appendChild(chev);
+      var av = document.createElement('span'); av.className='tav'; av.style.background=color; av.textContent=(p.name||'?').trim().charAt(0).toUpperCase(); row.appendChild(av);
       var nm = document.createElement('span'); nm.className='tname';
-      nm.innerHTML = esc(p.name) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + (p.spouse?' <em>&amp; '+esc(p.spouse)+'</em>':'');
+      var age=''; if(p.birthYear){ var yy=parseInt(p.birthYear,10), cy=new Date().getFullYear(); if(yy>=1900 && yy<=cy){ age=' <span class="tage">'+(cy-yy)+'</span>'; } }
+      var sp=''; if(p.spouse){ sp=' <em>&amp; '+esc(p.spouse)+'</em>'+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':''); }
+      nm.innerHTML = esc(p.name) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp + age;
       row.appendChild(nm);
       var menu = document.createElement('button'); menu.type='button'; menu.className='tmenu'; menu.setAttribute('aria-label','Options'); menu.textContent='⋯'; row.appendChild(menu);
       node.appendChild(row);
@@ -1114,8 +1130,15 @@
       return node;
     }
     function render(){
+      var expanded = {};
+      Array.prototype.forEach.call(root.querySelectorAll('.tnode'), function(n){ if(!n.classList.contains('collapsed')) expanded[n.getAttribute('data-id')]=1; });
+      computeBranches();
       root.innerHTML='';
       PEOPLE.filter(function(p){ return !p.parent; }).forEach(function(p){ root.appendChild(nodeEl(p)); });
+      Object.keys(expanded).forEach(function(id){
+        var n = root.querySelector('.tnode[data-id="'+id+'"]');
+        if(n && n.classList.contains('collapsed')){ n.classList.remove('collapsed'); var c=n.querySelector(':scope > .trow > .tchev'); if(c) c.textContent='▾'; }
+      });
       hint.textContent = PEOPLE.length + ' people · tap ⋯ for options, or drag to move';
     }
     function load(){
@@ -1131,7 +1154,7 @@
     }
     function optionList(exclude){
       var opts = '<option value="">— Top level —</option>';
-      PEOPLE.forEach(function(p){ if(exclude[p.id]) return; opts += '<option value="'+p.id+'">'+esc(p.name)+'</option>'; });
+      PEOPLE.slice().sort(function(a,b){ return a.name.localeCompare(b.name); }).forEach(function(p){ if(exclude[p.id]) return; opts += '<option value="'+p.id+'">'+esc(p.name)+'</option>'; });
       return opts;
     }
     function openAction(node, act){
@@ -1140,7 +1163,7 @@
       if(act==='add'){
         form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40"><button type="button" class="game-btn" data-do="add">Add child</button>';
       } else if(act==='edit'){
-        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Spouse in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
       } else if(act==='move'){
         var ex = descendants(id); ex[id]=1;
         form.innerHTML = '<select class="tf-parent">'+optionList(ex)+'</select><button type="button" class="game-btn" data-do="move">Move here</button>';
@@ -1153,15 +1176,17 @@
       if(chev){ var n=closest(chev,'.tnode'); if(n && childrenOf(n.getAttribute('data-id')).length){ n.classList.toggle('collapsed'); chev.textContent=n.classList.contains('collapsed')?'▸':'▾'; } return; }
       var menu = closest(e.target,'.tmenu');
       if(menu){ var node=closest(menu,'.tnode'), actions=node.querySelector('.tactions');
-        if(actions.hidden){ actions.hidden=false; actions.innerHTML='<div class="tact-row"><button type="button" data-act="add">➕ Add child</button><button type="button" data-act="edit">✏️ Edit</button><button type="button" data-act="move">↔️ Move</button><button type="button" data-act="del">🗑️ Delete</button></div><div class="tact-form"></div>'; }
+        if(actions.hidden){ actions.hidden=false; actions.innerHTML='<div class="tact-row"><button type="button" data-do="up">⬆️ Up</button><button type="button" data-do="down">⬇️ Down</button><button type="button" data-act="add">➕ Add child</button><button type="button" data-act="edit">✏️ Edit</button><button type="button" data-act="move">↔️ Move</button><button type="button" data-act="del">🗑️ Delete</button></div><div class="tact-form"></div>'; }
         else { actions.hidden=true; actions.innerHTML=''; } return; }
       var act = closest(e.target,'[data-act]');
       if(act){ openAction(closest(act,'.tnode'), act.getAttribute('data-act')); return; }
       var doBtn = closest(e.target,'[data-do]');
       if(doBtn){ var node3=closest(doBtn,'.tnode'), id=node3.getAttribute('data-id'), op=doBtn.getAttribute('data-do');
         if(op==='add'){ var nm=node3.querySelector('.tf-name').value.trim(); if(!nm) return; api({action:'add', name:nm, spouse:node3.querySelector('.tf-spouse').value.trim(), parent:id}); }
-        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), deceased:node3.querySelector('.tf-dec').checked}); }
+        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim()}); }
         else if(op==='move'){ api({action:'move', id:id, parent:node3.querySelector('.tf-parent').value}); }
+        else if(op==='up'){ api({action:'reorder', id:id, dir:'up'}); }
+        else if(op==='down'){ api({action:'reorder', id:id, dir:'down'}); }
         else if(op==='delyes'){ api({action:'delete', id:id}); }
       }
     });
