@@ -131,7 +131,8 @@ export default async (req) => {
       const person = {
         id: makeId(), name,
         spouse: (body.spouse || "").toString().trim().slice(0, 40),
-        parent, deceased: !!body.deceased, spouseDeceased: !!body.spouseDeceased, birthYear: parseYear(body.birthYear),
+        parent, deceased: !!body.deceased, spouseDeceased: !!body.spouseDeceased,
+        birthYear: parseYear(body.birthYear), spouseBirthYear: parseYear(body.spouseBirthYear),
       };
       people.push(person);
       await store.setJSON("people", people);
@@ -146,6 +147,7 @@ export default async (req) => {
       if (typeof body.deceased === "boolean") p.deceased = body.deceased;
       if (typeof body.spouseDeceased === "boolean") p.spouseDeceased = body.spouseDeceased;
       if (typeof body.birthYear !== "undefined") p.birthYear = parseYear(body.birthYear);
+      if (typeof body.spouseBirthYear !== "undefined") p.spouseBirthYear = parseYear(body.spouseBirthYear);
       await store.setJSON("people", people);
       return Response.json({ ok: true, people });
     }
