@@ -17,7 +17,7 @@ function shuffle(arr) {
 }
 
 export default async (req) => {
-  const store = getStore("reunion-trivia");
+  const store = getStore({ name: "reunion-trivia", consistency: "strong" });
 
   const getQuestions = async () => (await store.get("questions", { type: "json" })) || [];
   const getPlayers = async () => (await store.get("players", { type: "json" })) || {};

@@ -5,7 +5,7 @@ const ADMIN_KEY = "corbin2026";
 
 // Seeded once. After that the tree is fully editable and persists in Blobs.
 const SEED = [
-  { id: "bev", name: "Beverly Opal Walsh", spouse: "Jim Corbin", parent: null, deceased: true },
+  { id: "bev", name: "Beverly Opal Walsh", spouse: "Jim Corbin", parent: null, deceased: true, spouseDeceased: true },
 
   // Beverly & Jim's seven children (branch heads)
   { id: "pam", name: "Pam Rouse", spouse: "Rick Rouse", parent: "bev", deceased: false },
@@ -86,9 +86,14 @@ const SEED = [
 function makeId() {
   return "n" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
+function parseYear(v) {
+  if (v === null || v === undefined || v === "") return null;
+  const n = parseInt(v, 10);
+  return n >= 1900 && n <= 2100 ? n : null;
+}
 
 export default async (req) => {
-  const store = getStore("reunion-tree");
+  const store = getStore({ name: "reunion-tree", consistency: "strong" });
 
   async function load() {
     let people = await store.get("people", { type: "json" });
@@ -126,7 +131,7 @@ export default async (req) => {
       const person = {
         id: makeId(), name,
         spouse: (body.spouse || "").toString().trim().slice(0, 40),
-        parent, deceased: !!body.deceased,
+        parent, deceased: !!body.deceased, spouseDeceased: !!body.spouseDeceased, birthYear: parseYear(body.birthYear),
       };
       people.push(person);
       await store.setJSON("people", people);
@@ -139,6 +144,8 @@ export default async (req) => {
       if (typeof body.name === "string" && body.name.trim()) p.name = body.name.trim().slice(0, 40);
       if (typeof body.spouse === "string") p.spouse = body.spouse.trim().slice(0, 40);
       if (typeof body.deceased === "boolean") p.deceased = body.deceased;
+      if (typeof body.spouseDeceased === "boolean") p.spouseDeceased = body.spouseDeceased;
+      if (typeof body.birthYear !== "undefined") p.birthYear = parseYear(body.birthYear);
       await store.setJSON("people", people);
       return Response.json({ ok: true, people });
     }
@@ -170,6 +177,21 @@ export default async (req) => {
       people.forEach((x) => { if (x.parent === id) x.parent = p.parent; }); // kids move up
       people = people.filter((x) => x.id !== id);
       await store.setJSON("people", people);
+      return Response.json({ ok: true, people });
+    }
+
+    if (body.action === "reorder") {
+      const p = byId((body.id || "").toString());
+      if (!p) return new Response("Not found", { status: 404 });
+      const sibs = people.filter((x) => (x.parent || null) === (p.parent || null));
+      const si = sibs.indexOf(p);
+      const swap = body.dir === "up" ? sibs[si - 1] : sibs[si + 1];
+      if (swap) {
+        const ai = people.indexOf(p), bi = people.indexOf(swap);
+        people[ai] = swap;
+        people[bi] = p;
+        await store.setJSON("people", people);
+      }
       return Response.json({ ok: true, people });
     }
 
