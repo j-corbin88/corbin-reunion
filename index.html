@@ -254,7 +254,7 @@
   .tree-toolbar{margin:2px 4px 10px}
   .tree-hint{font-size:.82rem;color:var(--ink-soft);font-weight:600}
   .tkids{margin-left:13px;padding-left:14px;border-left:2px solid var(--branch,var(--line))}
-  .trow{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 6px;border-radius:12px;transition:background .12s}
+  .trow{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 6px;border-radius:12px;transition:background .12s;cursor:pointer}
   .trow:hover{background:var(--sky)}
   .trow.drop{background:rgba(37,99,235,.12);outline:2px dashed var(--blue)}
   .tnode.dragging{opacity:.45}
@@ -1070,6 +1070,11 @@
     nameIn.addEventListener('keydown', function(e){ if(e.key==='Enter'){ start(); } });
     nextBtn.addEventListener('click', function(){ showQuestion(current); });
     addBtn.addEventListener('click', add);
+
+    // Show the leaderboard right away (before a name is entered) to spur entries
+    fetch(API).then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(d){ renderBoard(d.leaderboard); if(boardNote) boardNote.textContent=''; })
+      .catch(function(){ if(boardNote) boardNote.textContent='The leaderboard goes live once the site is deployed to Netlify.'; });
   })();
 
   // Family Tree (collaborative)
@@ -1095,6 +1100,7 @@
     }
     function applyState(){ setVisible(LIVE || isAdmin); renderAdmin(); }
     function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+    function ageBadge(y){ if(!y) return ''; var n=parseInt(y,10), cy=new Date().getFullYear(); return (n>=1900 && n<=cy) ? ' <span class="tage">'+(cy-n)+'</span>' : ''; }
     function closest(el, sel){ while(el && el!==root.parentNode){ if(el.matches && el.matches(sel)) return el; el=el.parentNode; } return null; }
     function childrenOf(id){ return PEOPLE.filter(function(p){ return (p.parent||null)===id; }); }
     function byId(id){ for(var i=0;i<PEOPLE.length;i++){ if(PEOPLE[i].id===id) return PEOPLE[i]; } return null; }
@@ -1117,9 +1123,8 @@
       row.appendChild(chev);
       var av = document.createElement('span'); av.className='tav'; av.style.background=color; av.textContent=(p.name||'?').trim().charAt(0).toUpperCase(); row.appendChild(av);
       var nm = document.createElement('span'); nm.className='tname';
-      var age=''; if(p.birthYear){ var yy=parseInt(p.birthYear,10), cy=new Date().getFullYear(); if(yy>=1900 && yy<=cy){ age=' <span class="tage">'+(cy-yy)+'</span>'; } }
-      var sp=''; if(p.spouse){ sp=' <em>&amp; '+esc(p.spouse)+'</em>'+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':''); }
-      nm.innerHTML = esc(p.name) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp + age;
+      var sp=''; if(p.spouse){ sp=' <em>&amp; '+esc(p.spouse)+'</em>'+ageBadge(p.spouseBirthYear)+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':''); }
+      nm.innerHTML = esc(p.name) + ageBadge(p.birthYear) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp;
       row.appendChild(nm);
       var menu = document.createElement('button'); menu.type='button'; menu.className='tmenu'; menu.setAttribute('aria-label','Options'); menu.textContent='⋯'; row.appendChild(menu);
       node.appendChild(row);
@@ -1163,7 +1168,7 @@
       if(act==='add'){
         form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40"><button type="button" class="game-btn" data-do="add">Add child</button>';
       } else if(act==='edit'){
-        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Spouse in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><input type="text" inputmode="numeric" class="tf-syear" placeholder="Spouse birth year (optional)" maxlength="4" value="'+(p.spouseBirthYear?esc(String(p.spouseBirthYear)):'')+'"><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Spouse in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
       } else if(act==='move'){
         var ex = descendants(id); ex[id]=1;
         form.innerHTML = '<select class="tf-parent">'+optionList(ex)+'</select><button type="button" class="game-btn" data-do="move">Move here</button>';
@@ -1172,8 +1177,6 @@
       }
     }
     root.addEventListener('click', function(e){
-      var chev = closest(e.target,'.tchev');
-      if(chev){ var n=closest(chev,'.tnode'); if(n && childrenOf(n.getAttribute('data-id')).length){ n.classList.toggle('collapsed'); chev.textContent=n.classList.contains('collapsed')?'▸':'▾'; } return; }
       var menu = closest(e.target,'.tmenu');
       if(menu){ var node=closest(menu,'.tnode'), actions=node.querySelector('.tactions');
         if(actions.hidden){ actions.hidden=false; actions.innerHTML='<div class="tact-row"><button type="button" data-do="up">⬆️ Up</button><button type="button" data-do="down">⬇️ Down</button><button type="button" data-act="add">➕ Add child</button><button type="button" data-act="edit">✏️ Edit</button><button type="button" data-act="move">↔️ Move</button><button type="button" data-act="del">🗑️ Delete</button></div><div class="tact-form"></div>'; }
@@ -1183,12 +1186,16 @@
       var doBtn = closest(e.target,'[data-do]');
       if(doBtn){ var node3=closest(doBtn,'.tnode'), id=node3.getAttribute('data-id'), op=doBtn.getAttribute('data-do');
         if(op==='add'){ var nm=node3.querySelector('.tf-name').value.trim(); if(!nm) return; api({action:'add', name:nm, spouse:node3.querySelector('.tf-spouse').value.trim(), parent:id}); }
-        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim()}); }
+        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim(), spouseBirthYear:node3.querySelector('.tf-syear').value.trim()}); }
         else if(op==='move'){ api({action:'move', id:id, parent:node3.querySelector('.tf-parent').value}); }
         else if(op==='up'){ api({action:'reorder', id:id, dir:'up'}); }
         else if(op==='down'){ api({action:'reorder', id:id, dir:'down'}); }
         else if(op==='delyes'){ api({action:'delete', id:id}); }
+        return;
       }
+      // Tap the name/row (anywhere except the ⋯ menu) to expand/collapse
+      var row = closest(e.target,'.trow');
+      if(row){ var n=closest(row,'.tnode'); if(n && childrenOf(n.getAttribute('data-id')).length){ n.classList.toggle('collapsed'); var c=n.querySelector(':scope > .trow > .tchev'); if(c) c.textContent=n.classList.contains('collapsed')?'▸':'▾'; } }
     });
     root.addEventListener('dragstart', function(e){ var n=closest(e.target,'.tnode'); if(!n) return; DRAG=n.getAttribute('data-id'); n.classList.add('dragging'); if(e.dataTransfer){ e.dataTransfer.effectAllowed='move'; try{ e.dataTransfer.setData('text/plain',DRAG); }catch(x){} } });
     root.addEventListener('dragend', function(e){ var n=closest(e.target,'.tnode'); if(n) n.classList.remove('dragging'); DRAG=null; Array.prototype.forEach.call(root.querySelectorAll('.trow.drop'),function(r){ r.classList.remove('drop'); }); });
