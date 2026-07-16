@@ -55,6 +55,7 @@ export default async (req) => {
       totalQuestions: questions.length,
       remaining: open.length,
       question: open.length ? serve(open[0]) : null,
+      questions: open.map(serve),
       leaderboard: board,
     });
   }
@@ -114,7 +115,8 @@ export default async (req) => {
         return Response.json({
           already: true, correct: false, correctAnswer: question.answer,
           score: rec.score || 0, remaining: open.length,
-          question: open.length ? serve(open[0]) : null, leaderboard: leaderboard(players),
+          question: open.length ? serve(open[0]) : null, questions: open.map(serve),
+          leaderboard: leaderboard(players),
         });
       }
 
@@ -128,7 +130,7 @@ export default async (req) => {
       return Response.json({
         correct, correctAnswer: question.answer, score: rec.score || 0,
         remaining: open.length, question: open.length ? serve(open[0]) : null,
-        leaderboard: leaderboard(players),
+        questions: open.map(serve), leaderboard: leaderboard(players),
       });
     }
 
