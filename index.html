@@ -264,6 +264,8 @@
   .tname{font-weight:700;color:var(--ink);flex:1;font-size:.95rem;line-height:1.3}
   .tname em{font-weight:600;color:var(--ink-soft);font-style:normal}
   .tage{font-weight:700;color:#fff;background:var(--branch,var(--ink-soft));font-size:.72rem;padding:2px 8px;border-radius:100px;margin-left:4px;vertical-align:middle}
+  .tav-pet{background:#fff !important;border:2px dashed var(--branch,var(--line));font-size:.78rem}
+  .trel{font-weight:800;color:var(--ink-soft);background:var(--sky);border:1px solid var(--line);font-size:.68rem;padding:2px 7px;border-radius:100px;margin-left:5px;vertical-align:middle}
   .tnode-root > .trow{background:linear-gradient(120deg,rgba(37,99,235,.12),rgba(8,145,178,.12));border:1px solid var(--line);margin-bottom:6px;padding:10px 10px 10px 8px}
   .tnode-root > .trow .tname{font-size:1.06rem}
   .tnode-root > .trow .tav{width:34px;height:34px;font-size:1rem}
@@ -279,6 +281,16 @@
   .tact-form label{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.9rem;margin-bottom:8px}
   .tact-form .game-btn{margin-top:0}
   .tree-note{max-width:640px;margin:14px auto 0;color:var(--ink-soft);font-size:.85rem;font-weight:600;text-align:center;line-height:1.5}
+  .histcard{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow);max-width:640px;margin:0 auto 20px}
+  .histcard h3{font-size:1.3rem;margin-bottom:4px}
+  .hist-sub{color:var(--ink-soft);font-size:.88rem;font-weight:600;margin-bottom:16px}
+  .hist{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .hist:last-of-type{border-bottom:0}
+  .hist-ico{font-size:1.4rem;flex:none;line-height:1.2}
+  .hist p{font-size:.93rem;color:var(--ink-soft);margin:0}
+  .hist b{color:var(--ink);display:block;font-weight:800;font-size:.98rem;margin-bottom:2px}
+  .hist small{display:block;margin-top:5px;font-size:.8rem;color:var(--ink-soft);opacity:.85;font-style:italic}
+  .hist-foot{margin-top:14px;font-size:.8rem;color:var(--ink-soft);font-weight:600;text-align:center}
   .tree-admin{font-weight:700;font-size:.85rem;border-radius:12px;padding:12px 14px;margin-bottom:12px;line-height:1.5}
   .tree-admin.draft{background:#FFF4D6;color:#7a5b00;border:1px solid #F5D580}
   .tree-admin.live{background:rgba(8,166,184,.12);color:var(--ink);border:1px solid var(--cyan)}
@@ -554,6 +566,7 @@
       <div class="card reveal">
         <span class="tag t-any">Just off resort</span>
         <h3>Local favorites 🍔</h3>
+        <p><strong>⭐ Family picks:</strong> <strong>Thunderbird Cafe</strong> is great for breakfast, about 7 minutes away. And <strong>Hank's Grille</strong> — who's catering Saturday — is open for lunch too, with a well-reviewed ribeye. Same area.</p>
         <p>Fun fact: your Friday and Saturday caterers — <strong>Ciro's Italian Eatery</strong> and <strong>Hank's Grille &amp; Catering</strong> — are local Massanutten spots.</p>
         <p>Also worth a trip: <strong>Jack Brown's</strong> burgers and <strong>Romano's Italian Bistro</strong> in Harrisonburg, and <strong>Kline's Ice Cream</strong> in McGaheysville.</p>
       </div>
@@ -760,6 +773,33 @@
       <h2>Family Tree</h2>
       <p>The whole Corbin clan, branch by branch. Tap the <b>⋯</b> next to anyone to add kids, edit, move, or remove them — it's shared, so the family can fill it in and fix it together.</p>
     </div>
+    <div class="histcard reveal">
+      <h3>A little Webb history 📜</h3>
+      <p class="hist-sub">Beverly was born a Webb — and the Webbs left a mark.</p>
+
+      <div class="hist">
+        <span class="hist-ico">🎓</span>
+        <p><b>A Webb helped found Yale</b>In 1701, ten Connecticut ministers founded the college that became Yale — and one of them was <strong>Rev. Joseph Webb of Fairfield</strong>. Harvard class of 1684, he stayed a trustee for some thirty years, riding horseback across the colony for meetings, and voted to put the school in New Haven.<small>Family lore says he was Yale's first rector — that was actually Abraham Pierson. Being one of the ten Founders is arguably the better story.</small></p>
+      </div>
+
+      <div class="hist">
+        <span class="hist-ico">⛳</span>
+        <p><b>The farm became a golf course</b>The family farmed <strong>Webb Road</strong> in the Town of Binghamton — the road carries the family name. In 1957 the land became Vestal Hills Country Club, at 3115 Webb Road. As Doug put it: where the cow pasture was is today the swimming pool.</p>
+      </div>
+
+      <div class="hist">
+        <span class="hist-ico">🎖️</span>
+        <p><b>Doug Webb (1923–2019)</b>Beverly's brother. Up at 5:30 to milk five cows by hand before walking a mile and a quarter to school. Left home to fight in the <strong>Battle of the Bulge</strong> — and there was still no electricity on the road when he went.</p>
+      </div>
+
+      <div class="hist">
+        <span class="hist-ico">👨‍👩‍👧‍👦</span>
+        <p><b>Eight kids in nine years</b>Beverly's parents, <strong>Edward Miller Webb and Beatrice Hawks</strong>, raised six boys and two girls on the farm through the Depression. Beatrice descended from the Moses family of Arrowhead Lake, Pennsylvania.</p>
+      </div>
+
+      <p class="hist-foot">From Doug Webb's essay in the Binghamton Press, December 15, 2004.</p>
+    </div>
+
     <div class="tree-card reveal">
       <div class="tree-toolbar"><div id="tree-admin"></div><span class="tree-hint" id="tree-hint">Loading the family…</span></div>
       <div id="tree-root" class="tree"></div>
@@ -1122,9 +1162,11 @@
       if(kids.length){ chev=document.createElement('button'); chev.type='button'; chev.className='tchev'; chev.textContent=node.classList.contains('collapsed')?'▸':'▾'; }
       else { chev=document.createElement('span'); chev.className='tchev-sp'; }
       row.appendChild(chev);
-      var av = document.createElement('span'); av.className='tav'; av.style.background=color; av.textContent=(p.name||'?').trim().charAt(0).toUpperCase(); row.appendChild(av);
+      var av = document.createElement('span'); av.className='tav'; av.style.background=color;
+      if(p.isPet){ av.classList.add('tav-pet'); av.textContent='🐾'; } else { av.textContent=(p.name||'?').trim().charAt(0).toUpperCase(); }
+      row.appendChild(av);
       var nm = document.createElement('span'); nm.className='tname';
-      var sp=''; if(p.spouse){ sp=' <em>&amp; '+esc(p.spouse)+'</em>'+ageBadge(p.spouseBirthYear)+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':''); }
+      var sp=''; if(p.spouse){ var rl=(p.partnerLabel && p.partnerLabel!=='Spouse') ? ' <span class="trel">'+esc(p.partnerLabel)+'</span>' : ''; sp=' <em>&amp; '+esc(p.spouse)+'</em>'+ageBadge(p.spouseBirthYear)+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':'')+rl; }
       nm.innerHTML = esc(p.name) + ageBadge(p.birthYear) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp;
       row.appendChild(nm);
       var menu = document.createElement('button'); menu.type='button'; menu.className='tmenu'; menu.setAttribute('aria-label','Options'); menu.textContent='⋯'; row.appendChild(menu);
@@ -1167,9 +1209,11 @@
       var id = node.getAttribute('data-id'), p = byId(id);
       var form = node.querySelector('.tactions .tact-form'); if(!form || !p) return;
       if(act==='add'){
-        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40"><button type="button" class="game-btn" data-do="add">Add child</button>';
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40"><input type="text" class="tf-spouse" placeholder="Spouse or partner (optional)" maxlength="40"><label><input type="checkbox" class="tf-pet"> This is a pet 🐾</label><button type="button" class="game-btn" data-do="add">Add</button>';
       } else if(act==='edit'){
-        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><input type="text" class="tf-spouse" placeholder="Spouse (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><input type="text" inputmode="numeric" class="tf-syear" placeholder="Spouse birth year (optional)" maxlength="4" value="'+(p.spouseBirthYear?esc(String(p.spouseBirthYear)):'')+'"><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Spouse in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
+        var rels=[['Spouse','Spouse'],['Partner','Partner'],['Fiancé(e)','Fiancé(e)']], cur=p.partnerLabel||'Spouse';
+        var relOpts=rels.map(function(r){ return '<option value="'+esc(r[0])+'"'+(r[0]===cur?' selected':'')+'>'+esc(r[1])+'</option>'; }).join('');
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><input type="text" class="tf-spouse" placeholder="Spouse or partner (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><select class="tf-rel">'+relOpts+'</select><input type="text" inputmode="numeric" class="tf-syear" placeholder="Their birth year (optional)" maxlength="4" value="'+(p.spouseBirthYear?esc(String(p.spouseBirthYear)):'')+'"><label><input type="checkbox" class="tf-pet"'+(p.isPet?' checked':'')+'> This is a pet 🐾</label><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Partner in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
       } else if(act==='move'){
         var ex = descendants(id); ex[id]=1;
         form.innerHTML = '<select class="tf-parent">'+optionList(ex)+'</select><button type="button" class="game-btn" data-do="move">Move here</button>';
@@ -1186,8 +1230,8 @@
       if(act){ openAction(closest(act,'.tnode'), act.getAttribute('data-act')); return; }
       var doBtn = closest(e.target,'[data-do]');
       if(doBtn){ var node3=closest(doBtn,'.tnode'), id=node3.getAttribute('data-id'), op=doBtn.getAttribute('data-do');
-        if(op==='add'){ var nm=node3.querySelector('.tf-name').value.trim(); if(!nm) return; api({action:'add', name:nm, spouse:node3.querySelector('.tf-spouse').value.trim(), parent:id}); }
-        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim(), spouseBirthYear:node3.querySelector('.tf-syear').value.trim()}); }
+        if(op==='add'){ var nm=node3.querySelector('.tf-name').value.trim(); if(!nm) return; api({action:'add', name:nm, spouse:node3.querySelector('.tf-spouse').value.trim(), isPet:node3.querySelector('.tf-pet').checked, parent:id}); }
+        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), partnerLabel:node3.querySelector('.tf-rel').value, isPet:node3.querySelector('.tf-pet').checked, deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim(), spouseBirthYear:node3.querySelector('.tf-syear').value.trim()}); }
         else if(op==='move'){ api({action:'move', id:id, parent:node3.querySelector('.tf-parent').value}); }
         else if(op==='up'){ api({action:'reorder', id:id, dir:'up'}); }
         else if(op==='down'){ api({action:'reorder', id:id, dir:'down'}); }
