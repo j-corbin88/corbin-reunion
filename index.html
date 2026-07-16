@@ -1065,7 +1065,7 @@
     }
     function showQuestion(q){
       feedback.textContent=''; feedback.className='tv-feedback'; nextBtn.hidden=true; locked=false;
-      if(skipBtn) skipBtn.hidden = QUEUE.length < 2;
+      if(skipBtn) skipBtn.hidden = !q;
       if(q){ current=q; qEl.textContent=q.q; renderOptions(q.options); qWrap.hidden=false; emptyEl.hidden=true; }
       else { current=null; qWrap.hidden=true; emptyEl.hidden=false; }
     }
@@ -1119,6 +1119,7 @@
     nextBtn.addEventListener('click', function(){ showQuestion(QUEUE[0] || null); });
     if(skipBtn){ skipBtn.addEventListener('click', function(){
       if(QUEUE.length > 1){ QUEUE.push(QUEUE.shift()); showQuestion(QUEUE[0]); }
+      else { feedback.textContent='That\'s the last one — go track down the answer and come back! 🕵️'; feedback.className='tv-feedback'; }
     }); }
     addBtn.addEventListener('click', add);
 
