@@ -249,6 +249,8 @@
   .tv-opt:disabled{cursor:default}
   .tv-opt.ok{border-color:var(--cyan);background:rgba(8,166,184,.14)}
   .tv-opt.no{border-color:var(--raspberry);background:rgba(245,52,138,.1)}
+  .tv-skip{margin-top:10px;font-family:inherit;font-weight:700;font-size:.85rem;border:0;background:none;color:var(--blue);cursor:pointer;padding:8px 4px;text-decoration:underline}
+  .tv-skip:hover{color:var(--blue-deep)}
 
   .tree-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px 14px;box-shadow:var(--shadow);max-width:640px;margin:0 auto}
   .tree-toolbar{margin:2px 4px 10px}
@@ -715,7 +717,7 @@
     <div class="sec-head reveal">
       <p class="eyebrow">Test your family smarts</p>
       <h2>Family Trivia</h2>
-      <p>Answer questions the family writes — and add your own for everyone else. Each question counts once, and new ones keep popping up as people add them, so your score climbs all weekend.</p>
+      <p>Answer questions the family writes — and add your own for everyone else. Don't know one? <strong>Skip it and go ask someone.</strong> Each question counts once, and your score climbs all weekend as people add more.</p>
     </div>
 
     <div class="trivia-card reveal">
@@ -737,11 +739,12 @@
         <div id="tv-question-wrap">
           <p class="tv-q" id="tv-q">Loading…</p>
           <div class="tv-options" id="tv-options"></div>
+          <button type="button" class="tv-skip" id="tv-skip">Skip for now — I'll go ask someone →</button>
           <p class="tv-feedback" id="tv-feedback"></p>
           <button type="button" class="game-btn tv-secondary" id="tv-next" hidden>Next question ›</button>
         </div>
         <div id="tv-empty" hidden>
-          <p class="tv-empty">🎉 You're all caught up! Add a question below, or check back as the family adds more.</p>
+          <p class="tv-empty">🎉 You're all caught up! Add a question below — or go stump someone at the pavilion.</p>
         </div>
       </div>
     </div>
@@ -771,7 +774,7 @@
     <div class="sec-head reveal">
       <p class="eyebrow">Who's who</p>
       <h2>Family Tree</h2>
-      <p>The whole Corbin clan, branch by branch. Tap the <b>⋯</b> next to anyone to add kids, edit, move, or remove them — it's shared, so the family can fill it in and fix it together.</p>
+      <p>Everyone, branch by branch. Tap the <b>⋯</b> next to anyone to add kids, edit, move, or remove them — it's shared, so the family can fill it in and fix it together.</p>
     </div>
     <div class="histcard reveal">
       <h3>A little Webb history 📜</h3>
@@ -1040,8 +1043,9 @@
         addCard = document.getElementById('tv-add-card'), newQ = document.getElementById('tv-newq'), newA = document.getElementById('tv-newa'),
         w1 = document.getElementById('tv-w1'), w2 = document.getElementById('tv-w2'), w3 = document.getElementById('tv-w3'),
         addBtn = document.getElementById('tv-addbtn'), addNote = document.getElementById('tv-add-note'),
-        boardEl = document.getElementById('tv-board'), boardNote = document.getElementById('tv-board-note'), gateNote = document.getElementById('tv-gate-note');
-    var player = '', current = null, locked = false;
+        boardEl = document.getElementById('tv-board'), boardNote = document.getElementById('tv-board-note'), gateNote = document.getElementById('tv-gate-note'),
+        skipBtn = document.getElementById('tv-skip');
+    var player = '', current = null, locked = false, QUEUE = [];
     function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
     function norm(s){ return String(s||'').toLowerCase().trim().replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim(); }
     function renderBoard(list){
@@ -1061,6 +1065,7 @@
     }
     function showQuestion(q){
       feedback.textContent=''; feedback.className='tv-feedback'; nextBtn.hidden=true; locked=false;
+      if(skipBtn) skipBtn.hidden = QUEUE.length < 2;
       if(q){ current=q; qEl.textContent=q.q; renderOptions(q.options); qWrap.hidden=false; emptyEl.hidden=true; }
       else { current=null; qWrap.hidden=true; emptyEl.hidden=false; }
     }
@@ -1069,7 +1074,8 @@
         .then(function(r){ if(!r.ok) throw 0; return r.json(); })
         .then(function(d){
           scoreEl.textContent=d.score||0; answeredEl.textContent=d.answeredCount||0; remainingEl.textContent=d.remaining||0;
-          renderBoard(d.leaderboard); showQuestion(d.question); addCard.hidden=false; boardNote.textContent='';
+          QUEUE = d.questions || (d.question ? [d.question] : []);
+          renderBoard(d.leaderboard); showQuestion(QUEUE[0] || null); addCard.hidden=false; boardNote.textContent='';
         })
         .catch(function(){ boardNote.textContent='Trivia goes live once the site is deployed to Netlify.'; addCard.hidden=false; });
     }
@@ -1089,8 +1095,9 @@
           Array.prototype.forEach.call(optionsEl.children, function(b){ if(norm(b.getAttribute('data-val'))===norm(d.correctAnswer)) b.classList.add('ok'); });
           if(d.correct){ feedback.textContent='✅ Correct!'; feedback.className='tv-feedback ok'; }
           else { btn.classList.add('no'); feedback.textContent='❌ Not quite!'; feedback.className='tv-feedback no'; }
-          renderBoard(d.leaderboard); current=d.question;
-          if(d.question){ nextBtn.hidden=false; } else { setTimeout(function(){ showQuestion(null); }, 1400); }
+          QUEUE = d.questions || [];
+          renderBoard(d.leaderboard); current = QUEUE[0] || null;
+          if(current){ nextBtn.hidden=false; } else { setTimeout(function(){ showQuestion(null); }, 1400); }
         })
         .catch(function(){ feedback.textContent='Could not submit — works once deployed to Netlify.'; feedback.className='tv-feedback no';
           Array.prototype.forEach.call(optionsEl.children, function(b){ b.disabled=false; }); locked=false; });
@@ -1109,7 +1116,10 @@
     }
     startBtn.addEventListener('click', start);
     nameIn.addEventListener('keydown', function(e){ if(e.key==='Enter'){ start(); } });
-    nextBtn.addEventListener('click', function(){ showQuestion(current); });
+    nextBtn.addEventListener('click', function(){ showQuestion(QUEUE[0] || null); });
+    if(skipBtn){ skipBtn.addEventListener('click', function(){
+      if(QUEUE.length > 1){ QUEUE.push(QUEUE.shift()); showQuestion(QUEUE[0]); }
+    }); }
     addBtn.addEventListener('click', add);
 
     // Show the leaderboard right away (before a name is entered) to spur entries
