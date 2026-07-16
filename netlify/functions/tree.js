@@ -133,6 +133,8 @@ export default async (req) => {
         spouse: (body.spouse || "").toString().trim().slice(0, 40),
         parent, deceased: !!body.deceased, spouseDeceased: !!body.spouseDeceased,
         birthYear: parseYear(body.birthYear), spouseBirthYear: parseYear(body.spouseBirthYear),
+        partnerLabel: (body.partnerLabel || "Spouse").toString().slice(0, 20),
+        isPet: !!body.isPet,
       };
       people.push(person);
       await store.setJSON("people", people);
@@ -148,6 +150,8 @@ export default async (req) => {
       if (typeof body.spouseDeceased === "boolean") p.spouseDeceased = body.spouseDeceased;
       if (typeof body.birthYear !== "undefined") p.birthYear = parseYear(body.birthYear);
       if (typeof body.spouseBirthYear !== "undefined") p.spouseBirthYear = parseYear(body.spouseBirthYear);
+      if (typeof body.partnerLabel === "string") p.partnerLabel = body.partnerLabel.slice(0, 20);
+      if (typeof body.isPet === "boolean") p.isPet = body.isPet;
       await store.setJSON("people", people);
       return Response.json({ ok: true, people });
     }
