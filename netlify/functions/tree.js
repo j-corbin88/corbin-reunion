@@ -135,6 +135,8 @@ export default async (req) => {
         birthYear: parseYear(body.birthYear), spouseBirthYear: parseYear(body.spouseBirthYear),
         partnerLabel: (body.partnerLabel || "Spouse").toString().slice(0, 20),
         isPet: !!body.isPet,
+        expecting: !!body.expecting,
+        expectingGender: (body.expectingGender || "").toString().slice(0, 10),
       };
       people.push(person);
       await store.setJSON("people", people);
@@ -152,6 +154,8 @@ export default async (req) => {
       if (typeof body.spouseBirthYear !== "undefined") p.spouseBirthYear = parseYear(body.spouseBirthYear);
       if (typeof body.partnerLabel === "string") p.partnerLabel = body.partnerLabel.slice(0, 20);
       if (typeof body.isPet === "boolean") p.isPet = body.isPet;
+      if (typeof body.expecting === "boolean") p.expecting = body.expecting;
+      if (typeof body.expectingGender === "string") p.expectingGender = body.expectingGender.slice(0, 10);
       await store.setJSON("people", people);
       return Response.json({ ok: true, people });
     }
