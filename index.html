@@ -267,6 +267,9 @@
   .tname em{font-weight:600;color:var(--ink-soft);font-style:normal}
   .tage{font-weight:700;color:#fff;background:var(--branch,var(--ink-soft));font-size:.72rem;padding:2px 8px;border-radius:100px;margin-left:4px;vertical-align:middle}
   .tav-pet{background:#fff !important;border:2px dashed var(--branch,var(--line));font-size:.78rem}
+  .texp{font-weight:800;color:#fff;background:#0BA15A;font-size:.68rem;padding:2px 8px;border-radius:100px;margin-left:5px;vertical-align:middle;white-space:nowrap}
+  .texp.boy{background:#2563EB}
+  .texp.girl{background:#EC4899}
   .trel{font-weight:800;color:var(--ink-soft);background:var(--sky);border:1px solid var(--line);font-size:.68rem;padding:2px 7px;border-radius:100px;margin-left:5px;vertical-align:middle}
   .tnode-root > .trow{background:linear-gradient(120deg,rgba(37,99,235,.12),rgba(8,145,178,.12));border:1px solid var(--line);margin-bottom:6px;padding:10px 10px 10px 8px}
   .tnode-root > .trow .tname{font-size:1.06rem}
@@ -1177,8 +1180,9 @@
       if(p.isPet){ av.classList.add('tav-pet'); av.textContent='🐾'; } else { av.textContent=(p.name||'?').trim().charAt(0).toUpperCase(); }
       row.appendChild(av);
       var nm = document.createElement('span'); nm.className='tname';
+      var exp=''; if(p.expecting){ var g=p.expectingGender||''; exp=' <span class="texp'+(g==='Boy'?' boy':g==='Girl'?' girl':'')+'">🤰 '+(g||'Expecting')+'</span>'; }
       var sp=''; if(p.spouse){ var rl=(p.partnerLabel && p.partnerLabel!=='Spouse') ? ' <span class="trel">'+esc(p.partnerLabel)+'</span>' : ''; sp=' <em>&amp; '+esc(p.spouse)+'</em>'+ageBadge(p.spouseBirthYear)+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':'')+rl; }
-      nm.innerHTML = esc(p.name) + ageBadge(p.birthYear) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp;
+      nm.innerHTML = esc(p.name) + ageBadge(p.birthYear) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp + exp;
       row.appendChild(nm);
       var menu = document.createElement('button'); menu.type='button'; menu.className='tmenu'; menu.setAttribute('aria-label','Options'); menu.textContent='⋯'; row.appendChild(menu);
       node.appendChild(row);
@@ -1224,7 +1228,7 @@
       } else if(act==='edit'){
         var rels=[['Spouse','Spouse'],['Partner','Partner'],['Fiancé(e)','Fiancé(e)']], cur=p.partnerLabel||'Spouse';
         var relOpts=rels.map(function(r){ return '<option value="'+esc(r[0])+'"'+(r[0]===cur?' selected':'')+'>'+esc(r[1])+'</option>'; }).join('');
-        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><input type="text" class="tf-spouse" placeholder="Spouse or partner (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><select class="tf-rel">'+relOpts+'</select><input type="text" inputmode="numeric" class="tf-syear" placeholder="Their birth year (optional)" maxlength="4" value="'+(p.spouseBirthYear?esc(String(p.spouseBirthYear)):'')+'"><label><input type="checkbox" class="tf-pet"'+(p.isPet?' checked':'')+'> This is a pet 🐾</label><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Partner in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><input type="text" class="tf-spouse" placeholder="Spouse or partner (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><select class="tf-rel">'+relOpts+'</select><input type="text" inputmode="numeric" class="tf-syear" placeholder="Their birth year (optional)" maxlength="4" value="'+(p.spouseBirthYear?esc(String(p.spouseBirthYear)):'')+'"><label><input type="checkbox" class="tf-exp"'+(p.expecting?' checked':'')+'> Expecting a baby 🤰</label><select class="tf-eg"><option value=""'+(!p.expectingGender?' selected':'')+'>Don\'t know yet</option><option value="Boy"'+(p.expectingGender==='Boy'?' selected':'')+'>Boy</option><option value="Girl"'+(p.expectingGender==='Girl'?' selected':'')+'>Girl</option></select><label><input type="checkbox" class="tf-pet"'+(p.isPet?' checked':'')+'> This is a pet 🐾</label><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Partner in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
       } else if(act==='move'){
         var ex = descendants(id); ex[id]=1;
         form.innerHTML = '<select class="tf-parent">'+optionList(ex)+'</select><button type="button" class="game-btn" data-do="move">Move here</button>';
@@ -1242,7 +1246,7 @@
       var doBtn = closest(e.target,'[data-do]');
       if(doBtn){ var node3=closest(doBtn,'.tnode'), id=node3.getAttribute('data-id'), op=doBtn.getAttribute('data-do');
         if(op==='add'){ var nm=node3.querySelector('.tf-name').value.trim(); if(!nm) return; api({action:'add', name:nm, spouse:node3.querySelector('.tf-spouse').value.trim(), isPet:node3.querySelector('.tf-pet').checked, parent:id}); }
-        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), partnerLabel:node3.querySelector('.tf-rel').value, isPet:node3.querySelector('.tf-pet').checked, deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim(), spouseBirthYear:node3.querySelector('.tf-syear').value.trim()}); }
+        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), partnerLabel:node3.querySelector('.tf-rel').value, isPet:node3.querySelector('.tf-pet').checked, expecting:node3.querySelector('.tf-exp').checked, expectingGender:node3.querySelector('.tf-eg').value, deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim(), spouseBirthYear:node3.querySelector('.tf-syear').value.trim()}); }
         else if(op==='move'){ api({action:'move', id:id, parent:node3.querySelector('.tf-parent').value}); }
         else if(op==='up'){ api({action:'reorder', id:id, dir:'up'}); }
         else if(op==='down'){ api({action:'reorder', id:id, dir:'down'}); }
