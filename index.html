@@ -863,6 +863,12 @@
     function applyState(){ setVisible(LIVE || isAdmin); renderAdmin(); }
     function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
     function ageBadge(y){ if(!y) return ''; var n=parseInt(y,10), cy=new Date().getFullYear(); return (n>=1900 && n<=cy) ? ' <span class="tage">'+(cy-n)+'</span>' : ''; }
+    function pdate(s){ s=String(s||'').trim(); var m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); if(m) return {m:+m[1],d:+m[2],y:+m[3]}; m=s.match(/^(\d{1,2})\/(\d{1,2})$/); if(m) return {m:+m[1],d:+m[2],y:null}; m=s.match(/^(\d{4})$/); if(m) return {m:null,d:null,y:+m[1]}; return null; }
+    function fmtBd(md,yr){ md=(md||'').trim(); yr=yr?String(yr):''; return md&&yr ? md+'/'+yr : (md||yr); }
+    function personYear(p){ var d=pdate(p.birthdate); if(d&&d.y) return d.y; return p.birthYear||null; }
+    function spouseYear(p){ var d=pdate(p.spouseBirthdate); if(d&&d.y) return d.y; return p.spouseBirthYear||null; }
+    function bdVal(p){ return p.birthdate || fmtBd(p.birthday, p.birthYear); }
+    function sbdVal(p){ return p.spouseBirthdate || fmtBd('', p.spouseBirthYear); }
     function closest(el, sel){ while(el && el!==root.parentNode){ if(el.matches && el.matches(sel)) return el; el=el.parentNode; } return null; }
     function childrenOf(id){ return PEOPLE.filter(function(p){ return (p.parent||null)===id; }); }
     function byId(id){ for(var i=0;i<PEOPLE.length;i++){ if(PEOPLE[i].id===id) return PEOPLE[i]; } return null; }
@@ -888,8 +894,8 @@
       row.appendChild(av);
       var nm = document.createElement('span'); nm.className='tname';
       var exp=''; if(p.expecting){ var g=p.expectingGender||''; exp=' <span class="texp'+(g==='Boy'?' boy':g==='Girl'?' girl':'')+'">🤰 '+(g||'Expecting')+'</span>'; }
-      var sp=''; if(p.spouse){ var rl=(p.partnerLabel && p.partnerLabel!=='Spouse') ? ' <span class="trel">'+esc(p.partnerLabel)+'</span>' : ''; sp=' <em>&amp; '+esc(p.spouse)+'</em>'+ageBadge(p.spouseBirthYear)+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':'')+rl; }
-      nm.innerHTML = esc(p.name) + ageBadge(p.birthYear) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp + exp;
+      var sp=''; if(p.spouse){ var rl=(p.partnerLabel && p.partnerLabel!=='Spouse') ? ' <span class="trel">'+esc(p.partnerLabel)+'</span>' : ''; sp=' <em>&amp; '+esc(p.spouse)+'</em>'+ageBadge(spouseYear(p))+(p.spouseDeceased?' <span class="tmem" title="In loving memory">🕊️</span>':'')+rl; }
+      nm.innerHTML = esc(p.name) + ageBadge(personYear(p)) + (p.deceased?' <span class="tmem" title="In loving memory">🕊️</span>':'') + sp + exp;
       row.appendChild(nm);
       var menu = document.createElement('button'); menu.type='button'; menu.className='tmenu'; menu.setAttribute('aria-label','Options'); menu.textContent='⋯'; row.appendChild(menu);
       node.appendChild(row);
@@ -935,7 +941,7 @@
       } else if(act==='edit'){
         var rels=[['Spouse','Spouse'],['Partner','Partner'],['Fiancé(e)','Fiancé(e)']], cur=p.partnerLabel||'Spouse';
         var relOpts=rels.map(function(r){ return '<option value="'+esc(r[0])+'"'+(r[0]===cur?' selected':'')+'>'+esc(r[1])+'</option>'; }).join('');
-        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" inputmode="numeric" class="tf-year" placeholder="Birth year (optional)" maxlength="4" value="'+(p.birthYear?esc(String(p.birthYear)):'')+'"><input type="text" class="tf-spouse" placeholder="Spouse or partner (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><select class="tf-rel">'+relOpts+'</select><input type="text" inputmode="numeric" class="tf-syear" placeholder="Their birth year (optional)" maxlength="4" value="'+(p.spouseBirthYear?esc(String(p.spouseBirthYear)):'')+'"><input type="text" class="tf-bday" placeholder="Birthday MM/DD (optional)" maxlength="5" value="'+esc(p.birthday||'')+'"><input type="text" class="tf-anniv" placeholder="Anniversary MM/DD (optional)" maxlength="5" value="'+esc(p.anniversary||'')+'"><label><input type="checkbox" class="tf-exp"'+(p.expecting?' checked':'')+'> Expecting a baby 🤰</label><select class="tf-eg"><option value=""'+(!p.expectingGender?' selected':'')+'>Don\'t know yet</option><option value="Boy"'+(p.expectingGender==='Boy'?' selected':'')+'>Boy</option><option value="Girl"'+(p.expectingGender==='Girl'?' selected':'')+'>Girl</option></select><label><input type="checkbox" class="tf-pet"'+(p.isPet?' checked':'')+'> This is a pet 🐾</label><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Partner in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
+        form.innerHTML = '<input type="text" class="tf-name" placeholder="Name" maxlength="40" value="'+esc(p.name)+'"><input type="text" class="tf-bdate" placeholder="Birthday MM/DD/YYYY (optional)" maxlength="10" value="'+esc(bdVal(p))+'"><input type="text" class="tf-spouse" placeholder="Spouse or partner (optional)" maxlength="40" value="'+esc(p.spouse||'')+'"><select class="tf-rel">'+relOpts+'</select><input type="text" class="tf-sbdate" placeholder="Their birthday MM/DD/YYYY (optional)" maxlength="10" value="'+esc(sbdVal(p))+'"><input type="text" class="tf-anniv" placeholder="Anniversary MM/DD/YYYY (optional)" maxlength="10" value="'+esc(p.anniversary||'')+'"><label><input type="checkbox" class="tf-exp"'+(p.expecting?' checked':'')+'> Expecting a baby 🤰</label><select class="tf-eg"><option value=""'+(!p.expectingGender?' selected':'')+'>Don\'t know yet</option><option value="Boy"'+(p.expectingGender==='Boy'?' selected':'')+'>Boy</option><option value="Girl"'+(p.expectingGender==='Girl'?' selected':'')+'>Girl</option></select><label><input type="checkbox" class="tf-pet"'+(p.isPet?' checked':'')+'> This is a pet 🐾</label><label><input type="checkbox" class="tf-dec"'+(p.deceased?' checked':'')+'> In loving memory</label><label><input type="checkbox" class="tf-decs"'+(p.spouseDeceased?' checked':'')+'> Partner in loving memory</label><button type="button" class="game-btn" data-do="update">Save</button>';
       } else if(act==='move'){
         var ex = descendants(id); ex[id]=1;
         form.innerHTML = '<select class="tf-parent">'+optionList(ex)+'</select><button type="button" class="game-btn" data-do="move">Move here</button>';
@@ -953,7 +959,7 @@
       var doBtn = closest(e.target,'[data-do]');
       if(doBtn){ var node3=closest(doBtn,'.tnode'), id=node3.getAttribute('data-id'), op=doBtn.getAttribute('data-do');
         if(op==='add'){ var nm=node3.querySelector('.tf-name').value.trim(); if(!nm) return; api({action:'add', name:nm, spouse:node3.querySelector('.tf-spouse').value.trim(), isPet:node3.querySelector('.tf-pet').checked, parent:id}); }
-        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), partnerLabel:node3.querySelector('.tf-rel').value, isPet:node3.querySelector('.tf-pet').checked, expecting:node3.querySelector('.tf-exp').checked, expectingGender:node3.querySelector('.tf-eg').value, deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthYear:node3.querySelector('.tf-year').value.trim(), spouseBirthYear:node3.querySelector('.tf-syear').value.trim(), birthday:node3.querySelector('.tf-bday').value.trim(), anniversary:node3.querySelector('.tf-anniv').value.trim()}); }
+        else if(op==='update'){ api({action:'update', id:id, name:node3.querySelector('.tf-name').value.trim(), spouse:node3.querySelector('.tf-spouse').value.trim(), partnerLabel:node3.querySelector('.tf-rel').value, isPet:node3.querySelector('.tf-pet').checked, expecting:node3.querySelector('.tf-exp').checked, expectingGender:node3.querySelector('.tf-eg').value, deceased:node3.querySelector('.tf-dec').checked, spouseDeceased:node3.querySelector('.tf-decs').checked, birthdate:node3.querySelector('.tf-bdate').value.trim(), spouseBirthdate:node3.querySelector('.tf-sbdate').value.trim(), anniversary:node3.querySelector('.tf-anniv').value.trim()}); }
         else if(op==='move'){ api({action:'move', id:id, parent:node3.querySelector('.tf-parent').value}); }
         else if(op==='up'){ api({action:'reorder', id:id, dir:'up'}); }
         else if(op==='down'){ api({action:'reorder', id:id, dir:'down'}); }
@@ -1008,20 +1014,23 @@
     var API='/.netlify/functions/tree';
     var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-    function parseMd(s){ var m=String(s||'').match(/^(\d{1,2})\/(\d{1,2})$/); return m?{m:parseInt(m[1],10),d:parseInt(m[2],10)}:null; }
+    function pdate(s){ s=String(s||'').trim(); var m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); if(m) return {m:+m[1],d:+m[2],y:+m[3]}; m=s.match(/^(\d{1,2})\/(\d{1,2})$/); if(m) return {m:+m[1],d:+m[2],y:null}; m=s.match(/^(\d{4})$/); if(m) return {m:null,d:null,y:+m[1]}; return null; }
+    function mdY(md,yr){ var r=null; if(md){ var m=String(md).match(/^(\d{1,2})\/(\d{1,2})$/); if(m) r={m:+m[1],d:+m[2],y:null}; } if(yr){ r=r||{m:null,d:null,y:null}; r.y=parseInt(yr,10); } return r; }
+    function ordinal(n){ var s=['th','st','nd','rd'], v=n%100; return n+(s[(v-20)%10]||s[v]||s[0]); }
     function render(people){
       var today=new Date(); today=new Date(today.getFullYear(),today.getMonth(),today.getDate());
       var ev=[];
       people.forEach(function(p){
-        var b=parseMd(p.birthday); if(b){ ev.push({who:p.name, m:b.m, d:b.d, kind:'bday', year:p.birthYear}); }
-        var a=parseMd(p.anniversary); if(a && p.spouse){ ev.push({who:p.name+' & '+p.spouse, m:a.m, d:a.d, kind:'anniv'}); }
+        var b=pdate(p.birthdate)||mdY(p.birthday,p.birthYear); if(b && b.m && b.d){ ev.push({who:p.name, m:b.m, d:b.d, kind:'bday', year:b.y}); }
+        var sb=pdate(p.spouseBirthdate)||mdY(null,p.spouseBirthYear); if(sb && sb.m && sb.d && p.spouse){ ev.push({who:p.spouse, m:sb.m, d:sb.d, kind:'bday', year:sb.y}); }
+        var a=pdate(p.anniversary); if(a && a.m && a.d && p.spouse){ ev.push({who:p.name+' & '+p.spouse, m:a.m, d:a.d, kind:'anniv', year:a.y}); }
       });
       if(!ev.length){ wrap.innerHTML='<p class="cal-empty">No birthdays or anniversaries yet \u2014 add them in the family tree (tap \u22ef \u2192 Edit).</p>'; return; }
       ev.forEach(function(e){ var y=today.getFullYear(); var dt=new Date(y,e.m-1,e.d); if(dt<today) dt=new Date(y+1,e.m-1,e.d); e.date=dt; e.days=Math.round((dt-today)/86400000); });
       ev.sort(function(a,b){ return a.date-b.date; });
       wrap.innerHTML=ev.slice(0,25).map(function(e){
         var soon=e.days===0?'Today! \uD83C\uDF89':e.days===1?'Tomorrow':'in '+e.days+' days';
-        var sub; if(e.kind==='bday'){ var t=e.year?(e.date.getFullYear()-parseInt(e.year,10)):null; sub='\uD83C\uDF82 Birthday'+(t?' \u00b7 turns '+t:''); } else { sub='\uD83D\uDC8D Anniversary'; }
+        var sub; if(e.kind==='bday'){ var t=e.year?(e.date.getFullYear()-e.year):null; sub='\uD83C\uDF82 Birthday'+(t!=null?' \u00b7 turns '+t:''); } else { var ay=e.year?(e.date.getFullYear()-e.year):null; sub='\uD83D\uDC8D '+(ay!=null?ordinal(ay)+' anniversary':'Anniversary'); }
         return '<div class="cal-item"><div class="cal-date"><div class="cal-mon">'+MON[e.m-1]+'</div><div class="cal-day">'+e.d+'</div></div><div class="cal-body"><div class="cal-who">'+esc(e.who)+'</div><div class="cal-sub">'+sub+'</div></div><span class="cal-soon">'+soon+'</span></div>';
       }).join('');
     }
