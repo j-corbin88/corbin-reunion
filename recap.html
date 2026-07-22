@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Corbin Family</title>
+<title>Corbin Reunion 2026 · Recap</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -341,30 +341,28 @@
 
 <nav>
   <div class="wrap">
-    <button type="button" data-target="news">News</button>
-    <button type="button" data-target="calendar">Dates</button>
-    <button type="button" data-target="trivia">Trivia</button>
-    <button type="button" data-target="photos">Photos</button>
-    <button type="button" id="nav-family" data-target="family" style="display:none">Family</button>
-    <button type="button" data-target="game">Games</button>
-    <button type="button" data-target="contacts">Contacts</button>
-    <a class="nav-cta" href="recap.html">2026 Recap</a>
+    <a class="nav-cta" href="index.html">← Home</a>
+    <button type="button" data-target="schedule">Schedule</button>
+    <button type="button" data-target="dinners">Dinners</button>
+    <button type="button" data-target="activities">Activities</button>
+    <button type="button" data-target="adventure">Adventure Park</button>
+    <button type="button" data-target="eat">Eat</button>
+    <button type="button" data-target="bring">Bring</button>
+    <button type="button" data-target="info">Info</button>
   </div>
 </nav>
 
 <header>
   <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span>
   <div class="wrap">
-    <span class="tagpill">The family, all year round</span>
-    <h1>The Corbin Family</h1>
-    <p class="place">News, birthdays, trivia &amp; our family tree — keeping us close between reunions.</p>
+    <span class="tagpill">A look back</span>
+    <h1>Corbin Family Reunion</h1>
+    <p class="place">Massanutten Resort · Woodstone Meadow Condos · Virginia</p>
     <div class="facts">
-      <span>Next reunion · <b>Summer 2028</b></span>
-      <span>Massanutten, VA</span>
+      <span><b>July 16–19</b>, 2026</span>
+      <span>Thursday → Sunday</span>
     </div>
-    <div class="countdown" id="countdown" aria-label="Countdown to the next reunion"></div>
-    <p class="hero-note">Counting down to Summer 2028 — exact dates to come.</p>
-    <a class="hero-link" href="recap.html">📸 Relive the 2026 Reunion →</a>
+    <button type="button" class="hero-btn" data-target="schedule">📅 Jump to the schedule</button>
   </div>
   <svg class="waves" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
     <path class="w-a" d="M0,38 C200,66 400,10 600,34 C800,58 1000,14 1200,40 L1200,70 L0,70 Z"></path>
@@ -372,190 +370,346 @@
   </svg>
 </header>
 
-<!-- FAMILY NEWS -->
-<section id="news">
+<!-- SCHEDULE -->
+<section id="schedule" class="tint">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow">Stay connected</p>
-      <h2>Family News</h2>
-      <p>A wall for keeping up between reunions — share a milestone, a bit of news, a hello. Newest on top.</p>
+      <p class="eyebrow">Day by day</p>
+      <h2>The Plan</h2>
+      <p>A loose game plan for the weekend. Family dinners are at 6 PM each night — times below are firm where shown and flexible everywhere else.</p>
     </div>
-    <div class="news-card reveal">
-      <input id="news-name" type="text" maxlength="40" placeholder="Your name" autocomplete="off">
-      <textarea id="news-text" maxlength="600" placeholder="What's new? (a birth, a graduation, a move, a hello…)"></textarea>
-      <button type="button" class="game-btn" id="news-post" style="margin-top:0">Post update</button>
-      <p class="news-note" id="news-note"></p>
+    <div class="sched">
+      <div class="sched-day reveal">
+        <div class="sd-head thu"><span class="sd-num">Day 1</span><h3>Thursday · July 16</h3><span class="sd-sub">Arrival</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time sd-flex">Early</span><span class="sd-act"><b>Early arrivals</b> — meet at the outdoor pool &amp; pavilion</span></li>
+          <li><span class="sd-time">5:00 PM</span><span class="sd-act"><b>Check-in opens</b> — North Lobby, 1822 Resort Dr · use the <b>express line</b> (hard right when you enter)</span></li>
+          <li><span class="sd-time">6:00 PM</span><span class="sd-act"><b>Corbin Cookout</b> — burgers, dogs &amp; spiedies at the pavilion</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Games &amp; singing at the pavilion — Susie's got the games</span></li>
+        </ul>
+      </div>
+
+      <div class="sched-day reveal">
+        <div class="sd-head fri"><span class="sd-num">Day 2</span><h3>Friday · July 17</h3><span class="sd-sub">Golf day</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time sd-flex">Daytime</span><span class="sd-act"><b>Golf</b> — Jim Corbin coordinating tee times</span></li>
+          <li><span class="sd-time sd-flex">10–4</span><span class="sd-act">Family Adventure Park open (coaster, tubing, mini golf)</span></li>
+          <li><span class="sd-time">6:00 PM</span><span class="sd-act"><b>Ciro's Italian night</b> at the pavilion</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Pavilion hangout</span></li>
+        </ul>
+      </div>
+
+      <div class="sched-day reveal">
+        <div class="sd-head sat"><span class="sd-num">Day 3</span><h3>Saturday · July 18</h3><span class="sd-sub">Waterpark day</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time sd-flex">Daytime</span><span class="sd-act"><b>Waterpark</b> — Theresa's group tickets</span></li>
+          <li><span class="sd-time sd-flex">10–4</span><span class="sd-act">Family Adventure Park open</span></li>
+          <li><span class="sd-time sd-flex">Before 6</span><span class="sd-act"><b>📸 Family photo!</b> — everyone together before dinner</span></li>
+          <li><span class="sd-time">6:00 PM</span><span class="sd-act"><b>Hank's BBQ</b> dinner at the pavilion</span></li>
+          <li><span class="sd-time sd-flex">Evening</span><span class="sd-act">Pavilion games &amp; hangout</span></li>
+        </ul>
+      </div>
+
+      <div class="sched-day reveal">
+        <div class="sd-head sun"><span class="sd-num">Day 4</span><h3>Sunday · July 19</h3><span class="sd-sub">Departure</span></div>
+        <ul class="sd-list">
+          <li><span class="sd-time">By 10 AM</span><span class="sd-act"><b>Check-out</b> — text “Check Out” to 888-984-4342</span></li>
+          <li><span class="sd-time sd-flex">—</span><span class="sd-act">Safe travels home! 👋</span></li>
+        </ul>
+      </div>
     </div>
-    <div class="news-list" id="news-list"><p class="news-empty">Loading…</p></div>
   </div>
 </section>
 
-<!-- BIRTHDAYS & ANNIVERSARIES -->
-<section id="calendar" class="tint">
+<!-- DINNERS -->
+<section id="dinners">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow">Never miss one</p>
-      <h2>Birthdays &amp; Anniversaries</h2>
-      <p>Pulled from the family tree — add a birthday or anniversary to anyone (tap ⋯ → Edit) and it shows up here, counting down to the next one.</p>
+      <p class="eyebrow">The main event</p>
+      <h2>Family Dinner Every Night</h2>
+      <p>Three nights, three feasts — every dish is already spoken for. Find your name and bring your part!</p>
     </div>
-    <div class="cal-list" id="cal-list"><p class="cal-empty">Loading…</p></div>
+    <div class="board">
+      <div class="night thu reveal">
+        <div class="top"><p class="day">Thursday · July 16</p><p class="name">Corbin Cookout</p><p class="pick">Dinner 6:00 PM</p><a class="loc" href="https://www.google.com/maps/search/?api=1&query=James%20E%20Lambert%20Park%20Massanutten%20Resort%20VA" target="_blank" rel="noopener noreferrer">📍 The James E. Lambert pavilion</a></div>
+        <ul class="menu">
+          <li><span class="dish">Spiedies &amp; bread</span><span class="who">Jim C.</span></li>
+          <li><span class="dish">Hamburgers &amp; fixin's</span><span class="who">Josh &amp; Jordan</span></li>
+          <li><span class="dish">Hot dogs &amp; fixin's</span><span class="who">Josh &amp; Jordan</span></li>
+          <li><span class="dish">Grilled veggies</span><span class="who">Cyn</span></li>
+          <li><span class="dish">Chips (all the varieties)</span><span class="who">Rebekah, Tina, Theresa &amp; Jess</span></li>
+          <li><span class="dish">Pasta salad</span><span class="who">Cyn</span></li>
+          <li><span class="dish">Dessert</span><span class="who">Dave</span></li>
+        </ul>
+      </div>
+      <div class="night fri reveal">
+        <div class="top"><p class="day">Friday · July 17</p><p class="name">Ciro's Italian Night</p><p class="pick">Dinner 6:00 PM</p><a class="loc" href="https://www.google.com/maps/search/?api=1&query=James%20E%20Lambert%20Park%20Massanutten%20Resort%20VA" target="_blank" rel="noopener noreferrer">📍 The James E. Lambert pavilion</a></div>
+        <ul class="menu">
+          <li><span class="dish">Chicken parm</span></li>
+          <li><span class="dish">Butter pasta</span></li>
+          <li><span class="dish">Meatballs</span></li>
+          <li><span class="dish">Baked rigatoni</span></li>
+          <li><span class="dish">Bread</span></li>
+          <li><span class="dish">Caesar salad</span><span class="who">Tina, Theresa &amp; Jess</span></li>
+          <li><span class="dish">Escarole &amp; beans</span><span class="who">Cynthia</span></li>
+          <li><span class="dish">Dessert</span><span class="who">Jordan &amp; Shelley</span></li>
+        </ul>
+      </div>
+      <div class="night sat reveal">
+        <div class="top"><p class="day">Saturday · July 18</p><p class="name">Hank's BBQ</p><p class="pick">Dinner 6:00 PM</p><a class="loc" href="https://www.google.com/maps/search/?api=1&query=James%20E%20Lambert%20Park%20Massanutten%20Resort%20VA" target="_blank" rel="noopener noreferrer">📍 The James E. Lambert pavilion</a></div>
+        <ul class="menu">
+          <li><span class="dish">Chicken BBQ</span></li>
+          <li><span class="dish">Beef brisket</span></li>
+          <li><span class="dish">Baked beans</span></li>
+          <li><span class="dish">Potato salad</span></li>
+          <li><span class="dish">Buns</span></li>
+          <li><span class="dish">Caesar salad</span><span class="who">Melissa &amp; Mixi</span></li>
+          <li><span class="dish">All the leftover salads</span></li>
+          <li><span class="dish">Dessert</span><span class="who">Ruthie</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="dinner-note reveal">
+      <span>🍽️ Dinners at <b>6:00 PM</b></span>
+      <span>Plates, cups, napkins &amp; silverware provided</span>
+      <span>Clean ice provided — just <b>bring your own drinks</b></span>
+    </div>
   </div>
 </section>
 
-<!-- TRIVIA -->
-<section id="trivia">
+<!-- ACTIVITIES -->
+<section id="activities" class="tint">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow">Test your family smarts</p>
-      <h2>Family Trivia</h2>
-      <p>Answer questions the family writes — and add your own for everyone else. Don't know one? <strong>Skip it and go ask someone.</strong> Each question counts once, and your score climbs all weekend as people add more.</p>
+      <p class="eyebrow">Fill your days</p>
+      <h2>Things to Do</h2>
+      <p>Breakfast and lunch are on your own — the rest of the day is wide open.</p>
     </div>
-
-    <div class="trivia-card reveal">
-      <div id="tv-gate">
-        <label class="tv-label" for="tv-name">Your name</label>
-        <div class="tv-row">
-          <input id="tv-name" type="text" maxlength="24" placeholder="Enter your name" autocomplete="off">
-          <button type="button" class="game-btn" id="tv-start">Start</button>
+    <div class="cards">
+      <div class="card reveal">
+        <span class="tag t-sat">Saturday</span>
+        <h3>Massanutten Waterpark 🌊</h3>
+        <p>Indoor <em>and</em> outdoor park with waterslides, a lazy river and a wave pool. The indoor side feels a lot like Great Wolf Lodge.</p>
+        <div class="price"><span><b>$52</b> per person</span><span><b>$20</b> observer</span><span><b>Free</b> under 2</span></div>
+        <p>Theresa Ludwigsen has the group rate — text her which day and how many tickets, and she'll send her Venmo.</p>
+        <div class="lines"><a href="https://www.massresort.com/play/waterpark/" target="_blank" rel="noopener noreferrer">🔗 Waterpark info &amp; hours</a></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-fri">Friday</span>
+        <h3>Golf ⛳</h3>
+        <p>Jim Corbin is coordinating tee times — best to reserve about two weeks ahead.</p>
+        <div class="lines">
+          <a href="tel:5704930569">📞 Jim Corbin · 570-493-0569</a>
+          <a href="https://www.massresort.com/play/golf/" target="_blank" rel="noopener noreferrer">🔗 Golf courses &amp; tee times</a>
         </div>
-        <p class="tv-note" id="tv-gate-note">Your score is saved to this name — use the same one each time.</p>
       </div>
-
-      <div id="tv-play" hidden>
-        <div class="tv-hud">
-          <div class="hud-item">Score <b id="tv-score">0</b></div>
-          <div class="hud-item">Answered <b id="tv-answered">0</b></div>
-          <div class="hud-item">Left <b id="tv-remaining">0</b></div>
-        </div>
-        <div id="tv-question-wrap">
-          <p class="tv-q" id="tv-q">Loading…</p>
-          <div class="tv-options" id="tv-options"></div>
-          <button type="button" class="tv-skip" id="tv-skip">Skip for now — I'll go ask someone →</button>
-          <p class="tv-feedback" id="tv-feedback"></p>
-          <button type="button" class="game-btn tv-secondary" id="tv-next" hidden>Next question ›</button>
-        </div>
-        <div id="tv-empty" hidden>
-          <p class="tv-empty">🎉 You're all caught up! Add a question below — or go stump someone at the pavilion.</p>
-        </div>
+      <div class="card reveal">
+        <span class="tag t-any">Anytime</span>
+        <h3>Local Hikes 🥾</h3>
+        <p>Jim Corbin is planning the trail outings. Look for the sign-up sheet at the pavilion.</p>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-any">Every Evening</span>
+        <h3>The Pavilion 🎶</h3>
+        <p>We gather at the <strong>James E. Lambert Park pavilion</strong> in the Woodstone Meadows complex — with the outdoor pool right nearby — for games, singing and hanging out. <strong>Susie's in charge of the games</strong>, so come ready to play. The metal picnic tables aren't the comfiest — bring a camp chair or blanket for the lawn.</p>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-any">One evening · TBD</span>
+        <h3>Karaoke Night 🎤</h3>
+        <p>Taylor &amp; Jim Corbin are putting together a karaoke night. The exact evening is still being sorted — warm up those vocal cords and watch this space.</p>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-any">Included &amp; free</span>
+        <h3>Summer programming 🎬</h3>
+        <p>Your stay includes free season-long programming — outdoor movie nights, live music, and family fun nights around the resort.</p>
+        <div class="lines"><a href="https://www.massresort.com/explore/entertainment-dining-calendar/" target="_blank" rel="noopener noreferrer">🔗 Events calendar</a></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag t-fri">Book ahead</span>
+        <h3>Markets &amp; classes 🧺</h3>
+        <p>The Farmers Market runs Wednesdays 9am–12pm (1850 Meadow Vista Lane) — catch it if anyone arrives early. The Concierge also books wine tastings, cooking demos and classes.</p>
+        <div class="lines"><a href="tel:5402894978">📞 Concierge · 540-289-4978</a></div>
       </div>
     </div>
-
-    <div class="trivia-card reveal" id="tv-add-card" hidden>
-      <h3 class="tv-h3">✍️ Add a question</h3>
-      <input id="tv-newq" type="text" maxlength="200" placeholder="Your question (e.g. Where did Grandma &amp; Grandpa meet?)" autocomplete="off">
-      <input id="tv-newa" type="text" maxlength="80" placeholder="✓ Correct answer" autocomplete="off">
-      <input id="tv-w1" type="text" maxlength="80" placeholder="Wrong answer" autocomplete="off">
-      <input id="tv-w2" type="text" maxlength="80" placeholder="Wrong answer" autocomplete="off">
-      <input id="tv-w3" type="text" maxlength="80" placeholder="Wrong answer (optional)" autocomplete="off">
-      <button type="button" class="game-btn" id="tv-addbtn">Add question</button>
-      <p class="tv-note" id="tv-add-note">Give the correct answer plus at least two wrong ones — they'll be shuffled for everyone.</p>
-    </div>
-
-    <div class="leaderboard reveal">
-      <h3>🧠 Trivia Leaderboard</h3>
-      <ol id="tv-board"><li class="lb-empty">Enter your name above to play.</li></ol>
-      <p class="lb-note" id="tv-board-note"></p>
+    <div class="photo-note reveal">📸 <strong>Saturday = Family Picture!</strong> We're taking it before the 6 PM dinner — don't wander off beforehand.</div>
+    <div class="card reveal" style="margin-top:18px">
+      <span class="tag t-fri">More ideas</span>
+      <h3>Explore the Resort</h3>
+      <p>There's plenty more around the mountain — pull up the full resort map or browse activities on the Massanutten site.</p>
+      <div class="lines">
+        <a href="https://www.massresort.com/explore/our-resort/resort-map/" target="_blank" rel="noopener noreferrer">🗺️ Full resort map</a>
+        <a href="https://www.massresort.com/" target="_blank" rel="noopener noreferrer">🔗 massresort.com</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PHOTOS -->
-<section id="photos">
+<!-- ADVENTURE PARK -->
+<section id="adventure">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow">Say cheese</p>
-      <h2>Share the Memories</h2>
-      <p>One shared album for the whole weekend — add your photos and videos so everyone goes home with copies of the good stuff.</p>
+      <p class="eyebrow">Up at the ski area</p>
+      <h2>Family Adventure Park</h2>
+      <p>A whole mountain of extra fun a short drive from the condos — great for the kids and the daredevils.</p>
     </div>
-    <div class="album reveal">
-      <div class="album-emoji">📸</div>
-      <h3>Corbin Reunion 2026 — Shared Album</h3>
-      <p>Anyone with the link can view <em>and</em> add. Snap all weekend (don't forget the Saturday family picture before dinner!), then drop everything in here.</p>
-      <a class="album-btn" href="https://photos.app.goo.gl/E7UR8q7iGqNKrU767" target="_blank" rel="noopener noreferrer">Open the family album ›</a>
+    <div class="card reveal">
+      <div class="chips">
+        <span>🎢 Mountain coaster (~25 mph)</span>
+        <span>🧗 Climbing wall + Quick Jump</span>
+        <span>🛷 Summer tubing</span>
+        <span>🚡 Zip lines &amp; canopy tour</span>
+        <span>💎 Gem mining</span>
+        <span>⛳ Mini golf</span>
+        <span>🧒 Kids' Adventure Course (12 &amp; under)</span>
+        <span>🚠 Scenic chairlift</span>
+      </div>
+      <p>Summer tubing runs about <strong>$10 for 2 rides</strong> or <strong>$14 for 4</strong>. Most attractions are priced individually, and a waiver is required (a parent signs for anyone under 18).</p>
+      <p><strong>Good to know:</strong> it's at 3827 Massanutten Dr (up in the ski area), usually open about <strong>10am–4pm</strong>, and appears to be <strong>closed Thursdays</strong> — so plan it for Friday, Saturday or Sunday. It's weather-dependent, so check before you head up.</p>
+      <div class="lines">
+        <a href="https://www.massresort.com/play/family-adventure-park/" target="_blank" rel="noopener noreferrer">🔗 Adventure Park info</a>
+        <a href="https://www.massresort.com/play/family-adventure-park/hours-and-rates/" target="_blank" rel="noopener noreferrer">🕑 Hours &amp; rates</a>
+        <a href="tel:5402894022">📞 540-289-4022</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FAMILY TREE -->
-<section id="family" class="tint" style="display:none">
+<!-- EAT -->
+<section id="eat" class="tint">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow">Who's who</p>
-      <h2>Family Tree</h2>
-      <p>Everyone, branch by branch. Tap the <b>⋯</b> next to anyone to add kids, edit, move, or remove them — it's shared, so the family can fill it in and fix it together.</p>
+      <p class="eyebrow">Beyond family dinners</p>
+      <h2>Where to Eat</h2>
+      <p>Breakfast and lunch are on your own — here are the on-site spots and a few local favorites.</p>
     </div>
-    <div class="histcard reveal">
-      <h3>A little Webb history 📜</h3>
-      <p class="hist-sub">Beverly was born a Webb — and the Webbs left a mark.</p>
-
-      <div class="hist">
-        <span class="hist-ico">🎓</span>
-        <p><b>A Webb helped found Yale</b>In 1701, ten Connecticut ministers founded the college that became Yale — and one of them was <strong>Rev. Joseph Webb of Fairfield</strong>. Harvard class of 1684, he stayed a trustee for some thirty years, riding horseback across the colony for meetings, and voted to put the school in New Haven.<small>Family lore says he was Yale's first rector — that was actually Abraham Pierson. Being one of the ten Founders is arguably the better story.</small></p>
+    <div class="cards">
+      <div class="card reveal">
+        <span class="tag t-fri">On the resort</span>
+        <h3>On-site dining 🍕</h3>
+        <p><strong>Campfire Grill</strong> — pizza, skillets &amp; s'mores (reservations 540-289-5794).</p>
+        <p><strong>Virginia BBQ &amp; Pizza Co.</strong> — wood-smoked chicken, pork &amp; ribs.</p>
+        <p><strong>Base Camp</strong> — indoor/outdoor bar &amp; grill at the ski lodge.</p>
+        <p><strong>Hideaway Lounge</strong> — full-service bar right inside the WaterPark.</p>
+        <div class="lines"><a href="https://www.massresort.com/dine/" target="_blank" rel="noopener noreferrer">🔗 All resort dining</a></div>
       </div>
-
-      <div class="hist">
-        <span class="hist-ico">⛳</span>
-        <p><b>The farm became a golf course</b>The family farmed <strong>Webb Road</strong> in the Town of Binghamton — the road carries the family name. In 1957 the land became Vestal Hills Country Club, at 3115 Webb Road. As Doug put it: where the cow pasture was is today the swimming pool.</p>
+      <div class="card reveal">
+        <span class="tag t-any">Just off resort</span>
+        <h3>Local favorites 🍔</h3>
+        <p><strong>⭐ Family picks:</strong> <strong>Thunderbird Cafe</strong> is great for breakfast, about 7 minutes away. And <strong>Hank's Grille</strong> — who's catering Saturday — is open for lunch too, with a well-reviewed ribeye. Same area.</p>
+        <p>Fun fact: your Friday and Saturday caterers — <strong>Ciro's Italian Eatery</strong> and <strong>Hank's Grille &amp; Catering</strong> — are local Massanutten spots.</p>
+        <p>Also worth a trip: <strong>Jack Brown's</strong> burgers and <strong>Romano's Italian Bistro</strong> in Harrisonburg, and <strong>Kline's Ice Cream</strong> in McGaheysville.</p>
       </div>
-
-      <div class="hist">
-        <span class="hist-ico">🎖️</span>
-        <p><b>Doug Webb (1923–2019)</b>Beverly's brother. Up at 5:30 to milk five cows by hand before walking a mile and a quarter to school. Left home to fight in the <strong>Battle of the Bulge</strong> — and there was still no electricity on the road when he went.</p>
-      </div>
-
-      <div class="hist">
-        <span class="hist-ico">👨‍👩‍👧‍👦</span>
-        <p><b>Eight kids in nine years</b>Beverly's parents, <strong>Edward Miller Webb and Beatrice Hawks</strong>, raised six boys and two girls on the farm through the Depression. Beatrice descended from the Moses family of Arrowhead Lake, Pennsylvania.</p>
-      </div>
-
-      <p class="hist-foot">From Doug Webb's essay in the Binghamton Press, December 15, 2004.</p>
     </div>
-
-    <div class="tree-card reveal">
-      <div class="tree-toolbar"><div id="tree-admin"></div><span class="tree-hint" id="tree-hint">Loading the family…</span></div>
-      <div id="tree-root" class="tree"></div>
-    </div>
-    <p class="tree-note reveal">Tip: on a computer, drag a name onto another to move them. On a phone, use ⋯ → Move. Deleting someone bumps their kids up a level.</p>
   </div>
 </section>
 
-<!-- GAMES -->
-<section id="game" class="tint">
+<!-- WHAT TO BRING -->
+<section id="bring">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow">Just for fun</p>
-      <h2>Marshmallow Madness 🍡</h2>
-      <p>Warm up that throwing arm before the reunion. Family members keep popping out from behind the sofas — tag each one with a marshmallow before they duck back down!</p>
+      <p class="eyebrow">Pack smart</p>
+      <h2>What to Bring</h2>
+      <p>Tap each item as you pack it. Woodstone Meadow stocks the basics, so you only need the essentials below.</p>
     </div>
-    <div class="game-card reveal">
-      <div class="game-hud">
-        <div class="hud-item">Score <b id="g-score">0</b></div>
-        <div class="hud-item">Time <b id="g-time">30</b></div>
-        <div class="hud-item">Best <b id="g-best">0</b></div>
+    <div class="bring-grid">
+      <div class="panel reveal">
+        <h3>🎒 Pack these yourself</h3>
+        <ul class="check" id="packlist">
+          <li>Coffee &amp; coffee filters</li>
+          <li>Bath tissue</li>
+          <li>Laundry detergent</li>
+          <li>Pool / waterpark towels</li>
+          <li>Salt &amp; pepper</li>
+          <li>Your own drinks for family dinners</li>
+          <li>A camp, beach or pool chair (or blanket) for pavilion evenings</li>
+        </ul>
+        <p class="progress" id="packprog">0 packed</p>
       </div>
-      <div class="game-grid" id="g-grid" aria-label="Marshmallow game board"></div>
-      <button type="button" class="game-btn" id="g-start">Start throwing</button>
-      <p class="game-msg" id="g-msg">Tap “Start throwing” for a 30-second practice round.</p>
-      <div class="lb-save" id="lb-save" hidden>
-        <input id="lb-name" type="text" maxlength="20" placeholder="Enter your name" autocomplete="off">
-        <button type="button" class="game-btn" id="lb-submit">Save score</button>
+      <div class="panel reveal">
+        <h3>🏠 The condo provides</h3>
+        <ul class="provides">
+          <li>Bed linens</li>
+          <li>Towel sets (based on occupancy)</li>
+          <li>Kitchen linens — 2 dishcloths, 2 dish towels, 2 potholders</li>
+          <li>Starter pack — bath soap, dish soap, dishwasher detergent, paper towels, trash liners</li>
+          <li>Pack-'n-plays &amp; highchairs on request (fees &amp; availability)</li>
+        </ul>
       </div>
     </div>
-    <div class="leaderboard reveal">
-      <h3>🏆 Leaderboard</h3>
-      <ol id="lb-list"><li class="lb-empty">Loading…</li></ol>
-      <p class="lb-note" id="lb-note"></p>
+    <div class="helper-note reveal">🙌 <b>Thanks, Melissa Lalley</b> — bringing large trash bags &amp; empty gallon containers for the group.</div>
+  </div>
+</section>
+
+<!-- GOOD TO KNOW -->
+<section id="info" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">The details</p>
+      <h2>Good to Know</h2>
+    </div>
+
+    <div class="reveal">
+      <h3 class="fx-head">Weekend forecast</h3>
+      <div class="forecast" id="forecast"><p class="wx-note">Loading the latest forecast…</p></div>
+    </div>
+
+    <div class="info reveal" style="margin-bottom:18px">
+      <h3><span class="dot" style="background:var(--blue)"></span>Getting There</h3>
+      <p>Massanutten Resort · Massanutten, VA 22840. Tap for turn-by-turn directions to the right lobby:</p>
+      <div class="dir-btns">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=1822%20Resort%20Dr%20Massanutten%20VA%2022840" target="_blank" rel="noopener noreferrer"><span>North Lobby · 1822 Resort Dr</span><small>Mon–Thu ›</small></a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=1816%20Resort%20Dr%20Massanutten%20VA%2022840" target="_blank" rel="noopener noreferrer"><span>South Lobby · 1816 Resort Dr</span><small>Fri–Sun ›</small></a>
+      </div>
+      <p style="margin-top:14px"><a href="https://www.massresort.com/explore/our-resort/resort-map/" target="_blank" rel="noopener noreferrer">🗺️ Full resort map</a> · <a href="https://www.massresort.com/upload/photos/page_187_woodstone-meadows-map-2023.pdf" target="_blank" rel="noopener noreferrer">Woodstone Meadow map (PDF)</a></p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--cyan)"></span>Checking In</h3>
+        <p><strong>⚡ Use the express check-in line!</strong> We've all paid in advance, so it's much faster. It's a <strong>hard right</strong> when you walk in.</p>
+        <p>Check-in is <strong>5:00 PM</strong>. You can arrive earlier at the front desk, but your room may not be ready.</p>
+        <p><strong>Mon–Thu:</strong> North Lobby (open 24 hrs) · 1822 Resort Dr.</p>
+        <p><strong>Fri–Sun:</strong> South Lobby (4–9 PM) · 1816 Resort Dr.</p>
+        <p><a href="https://www.massresort.com/upload/photos/page_187_woodstone-meadows-map-2023.pdf" target="_blank" rel="noopener noreferrer">🗺️ Woodstone Meadow map (PDF)</a></p>
+      </div>
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--blue)"></span>Checking Out</h3>
+        <p>Departure day is <strong>Sunday</strong>. Check-out is <strong>10:00 AM</strong> — before you close the door, text <strong>"Check Out"</strong> to <a href="sms:8889844342">888-984-4342</a>.</p>
+        <p>Late checkout is charged at the half-day rate — call <a href="tel:5402894032">540-289-4032</a> or the front desk at <a href="tel:5402899441">540-289-9441</a>.</p>
+      </div>
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--blue-deep)"></span>Condo Balance</h3>
+        <p>Balance was due <strong>July 10</strong>. Full payment is charged automatically 7 days before arrival unless you make other arrangements.</p>
+        <p>Questions? Call HarleyJean at <a href="tel:5404172358">540-417-2358</a>.</p>
+      </div>
+      <div class="info reveal">
+        <h3><span class="dot" style="background:var(--sun)"></span>Groceries &amp; Meals</h3>
+        <p>Breakfast &amp; lunch are on your own; dinners are together at 6.</p>
+        <p>Stores nearby: <strong>Food Lion</strong> (Elkton) &amp; <strong>Martin's</strong> (Harrisonburg).</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:26px">
+      <h3 class="fx-head">Reunion contacts</h3>
+      <div class="contacts">
+        <a class="contact" href="tel:5704930569"><span class="role">Jim Corbin<small>Golf &amp; hikes</small></span><span class="num">570-493-0569</span></a>
+        <a class="contact" href="tel:5404172358"><span class="role">HarleyJean<small>Condo payments</small></span><span class="num">540-417-2358</span></a>
+        <a class="contact" href="tel:5402894978"><span class="role">Concierge<small>Activities &amp; classes</small></span><span class="num">540-289-4978</span></a>
+        <a class="contact" href="tel:5402894032"><span class="role">Resort Desk<small>Late checkout</small></span><span class="num">540-289-4032</span></a>
+        <div class="contact" style="cursor:default"><span class="role">Theresa Ludwigsen<small>Waterpark tickets &amp; Venmo</small></span><span class="num">🌊</span></div>
+        <div class="contact" style="cursor:default"><span class="role">Jessica<small>Meals &amp; food orders</small></span><span class="num">🍽️</span></div>
+        <div class="contact" style="cursor:default"><span class="role">Susie<small>Games &amp; activities</small></span><span class="num">🎲</span></div>
+        <div class="contact" style="cursor:default"><span class="role">Taylor &amp; Jim Corbin<small>Karaoke night</small></span><span class="num">🎤</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<footer id="contacts">
+<footer style="background:linear-gradient(160deg,#0B3D91,#123a86);color:#fff;padding:52px 0 44px;text-align:center">
   <div class="wrap">
-    <div class="shoutout reveal">
-      🌟 <strong>Cynthia</strong> — the mastermind behind this entire reunion.
-      <a href="tel:7023350010">📞 Call Cynthia · 702-335-0010</a>
-    </div>
-    <p class="signoff">The Corbin Family 💙</p>
+    <h2 style="font-size:clamp(1.7rem,6vw,2.4rem);margin-bottom:6px">That was 2026 💙</h2>
+    <p class="sub" style="opacity:.85;margin-bottom:24px">Massanutten, VA · July 16–19, 2026</p>
+    <a class="hero-link" href="index.html">← Back to the Family Hub</a>
   </div>
 </footer>
 
