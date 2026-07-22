@@ -97,6 +97,18 @@ function normMd(v) {
   const mo = parseInt(m[1], 10), da = parseInt(m[2], 10);
   return mo >= 1 && mo <= 12 && da >= 1 && da <= 31 ? mo + "/" + da : "";
 }
+function normDate(v) {
+  v = String(v || "").trim();
+  if (!v) return "";
+  let m = v.match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})$/);
+  if (m) { let mo = +m[1], da = +m[2], y = +m[3]; if (y < 100) y += y > 30 ? 1900 : 2000;
+    return mo>=1&&mo<=12&&da>=1&&da<=31&&y>=1900&&y<=2100 ? mo+"/"+da+"/"+y : ""; }
+  m = v.match(/^(\d{1,2})[\/.\-](\d{1,2})$/);
+  if (m) { let mo=+m[1], da=+m[2]; return mo>=1&&mo<=12&&da>=1&&da<=31 ? mo+"/"+da : ""; }
+  m = v.match(/^(\d{4})$/);
+  if (m) { let y=+m[1]; return y>=1900&&y<=2100 ? String(y) : ""; }
+  return "";
+}
 
 export default async (req) => {
   const store = getStore({ name: "reunion-tree", consistency: "strong" });
@@ -143,7 +155,8 @@ export default async (req) => {
         isPet: !!body.isPet,
         expecting: !!body.expecting,
         expectingGender: (body.expectingGender || "").toString().slice(0, 10),
-        birthday: normMd(body.birthday), anniversary: normMd(body.anniversary),
+        birthday: normMd(body.birthday), anniversary: normDate(body.anniversary),
+        birthdate: normDate(body.birthdate), spouseBirthdate: normDate(body.spouseBirthdate),
       };
       people.push(person);
       await store.setJSON("people", people);
@@ -163,8 +176,9 @@ export default async (req) => {
       if (typeof body.isPet === "boolean") p.isPet = body.isPet;
       if (typeof body.expecting === "boolean") p.expecting = body.expecting;
       if (typeof body.expectingGender === "string") p.expectingGender = body.expectingGender.slice(0, 10);
-      if (typeof body.birthday === "string") p.birthday = normMd(body.birthday);
-      if (typeof body.anniversary === "string") p.anniversary = normMd(body.anniversary);
+      if (typeof body.birthdate === "string") p.birthdate = normDate(body.birthdate);
+      if (typeof body.spouseBirthdate === "string") p.spouseBirthdate = normDate(body.spouseBirthdate);
+      if (typeof body.anniversary === "string") p.anniversary = normDate(body.anniversary);
       await store.setJSON("people", people);
       return Response.json({ ok: true, people });
     }
