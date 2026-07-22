@@ -91,6 +91,12 @@ function parseYear(v) {
   const n = parseInt(v, 10);
   return n >= 1900 && n <= 2100 ? n : null;
 }
+function normMd(v) {
+  const m = String(v || "").match(/^\s*(\d{1,2})\s*[\/\-.]\s*(\d{1,2})\s*$/);
+  if (!m) return "";
+  const mo = parseInt(m[1], 10), da = parseInt(m[2], 10);
+  return mo >= 1 && mo <= 12 && da >= 1 && da <= 31 ? mo + "/" + da : "";
+}
 
 export default async (req) => {
   const store = getStore({ name: "reunion-tree", consistency: "strong" });
@@ -137,6 +143,7 @@ export default async (req) => {
         isPet: !!body.isPet,
         expecting: !!body.expecting,
         expectingGender: (body.expectingGender || "").toString().slice(0, 10),
+        birthday: normMd(body.birthday), anniversary: normMd(body.anniversary),
       };
       people.push(person);
       await store.setJSON("people", people);
@@ -156,6 +163,8 @@ export default async (req) => {
       if (typeof body.isPet === "boolean") p.isPet = body.isPet;
       if (typeof body.expecting === "boolean") p.expecting = body.expecting;
       if (typeof body.expectingGender === "string") p.expectingGender = body.expectingGender.slice(0, 10);
+      if (typeof body.birthday === "string") p.birthday = normMd(body.birthday);
+      if (typeof body.anniversary === "string") p.anniversary = normMd(body.anniversary);
       await store.setJSON("people", people);
       return Response.json({ ok: true, people });
     }
