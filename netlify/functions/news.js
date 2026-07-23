@@ -29,8 +29,19 @@ export default async (req) => {
       const text = (body.text || "").toString().trim().slice(0, 600);
       if (!name || !text) return new Response("Name and message required", { status: 400 });
       const posts = await load();
-      posts.unshift({ id: makeId(), name, text, ts: Date.now() });
+      posts.unshift({ id: makeId(), name, text, ts: Date.now(), likes: 0 });
       await store.setJSON("posts", posts.slice(0, 200));
+      return Response.json({ posts: posts.slice(0, 100) });
+    }
+
+    if (body.action === "like") {
+      const id = (body.id || "").toString();
+      const delta = body.delta === -1 ? -1 : 1;
+      const posts = await load();
+      const post = posts.find((p) => p.id === id);
+      if (!post) return new Response("Not found", { status: 404 });
+      post.likes = Math.max(0, (post.likes || 0) + delta);
+      await store.setJSON("posts", posts);
       return Response.json({ posts: posts.slice(0, 100) });
     }
 
