@@ -313,6 +313,13 @@
   .post-time{font-size:.76rem;color:var(--ink-soft);font-weight:600}
   .post-text{color:var(--ink);font-size:.96rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;overflow-wrap:break-word}
   .post-del{position:absolute;top:9px;right:11px;border:0;background:none;color:var(--raspberry);font-weight:800;font-size:1rem;cursor:pointer;line-height:1}
+  .post-foot{margin-top:9px}
+  .post-like{font-family:inherit;font-weight:700;font-size:.84rem;border:1px solid var(--line);background:#fff;color:var(--ink-soft);border-radius:100px;padding:5px 13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .15s,border-color .15s,color .15s}
+  .post-like:hover{border-color:var(--raspberry)}
+  .post-like.on{background:rgba(245,52,138,.1);border-color:var(--raspberry);color:var(--raspberry)}
+  .post-like b{font-weight:800}
+  .feature-link{display:inline-block;margin-top:22px;font-weight:700;font-size:.88rem;color:#fff;opacity:.9;text-decoration:underline}
+  .feature-link:hover{opacity:1}
   .news-empty,.cal-empty{text-align:center;color:var(--ink-soft);font-weight:600;padding:8px 0}
   .news-note{max-width:600px;margin:10px auto 0;text-align:center;color:var(--ink-soft);font-size:.85rem;font-weight:600}
   .cal-list{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
@@ -364,7 +371,7 @@
     </div>
     <div class="countdown" id="countdown" aria-label="Countdown to the next reunion"></div>
     <p class="hero-note">Counting down to Summer 2028 — exact dates to come.</p>
-    <a class="hero-link" href="recap.html">📸 Relive the 2026 Reunion →</a>
+    <a class="hero-link" href="https://photos.app.goo.gl/E7UR8q7iGqNKrU767" target="_blank" rel="noopener noreferrer">📸 2026 Reunion Photos →</a>
   </div>
   <svg class="waves" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
     <path class="w-a" d="M0,38 C200,66 400,10 600,34 C800,58 1000,14 1200,40 L1200,70 L0,70 Z"></path>
@@ -556,6 +563,7 @@
       <a href="tel:7023350010">📞 Call Cynthia · 702-335-0010</a>
     </div>
     <p class="signoff">The Corbin Family 💙</p>
+    <a class="feature-link" href="mailto:Jordan.j.corbin@gmail.com?subject=Corbin%20family%20site%20%E2%80%94%20idea&amp;body=Here%27s%20an%20idea%20for%20the%20site%3A%0A%0A">💡 Have an idea for the site? Send it to Jordan</a>
   </div>
 </footer>
 
@@ -986,6 +994,9 @@
         postBtn=document.getElementById('news-post'), note=document.getElementById('news-note');
     var ADMIN_KEY='corbin2026', isAdmin=false;
     try{ isAdmin=new URLSearchParams(location.search).get('admin')===ADMIN_KEY; }catch(e){}
+    var LIKED={};
+    try{ LIKED=JSON.parse(localStorage.getItem('corbinLikes')||'{}')||{}; }catch(e){ LIKED={}; }
+    function saveLiked(){ try{ localStorage.setItem('corbinLikes', JSON.stringify(LIKED)); }catch(e){} }
     function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
     function rel(ts){ var s=Math.floor((Date.now()-ts)/1000); if(s<60)return'just now'; var m=Math.floor(s/60); if(m<60)return m+'m ago'; var h=Math.floor(m/60); if(h<24)return h+'h ago'; var d=Math.floor(h/24); if(d<7)return d+'d ago'; return new Date(ts).toLocaleDateString(); }
     function render(posts){
@@ -1003,7 +1014,15 @@
         .catch(function(){ note.textContent='Could not post \u2014 works once deployed to Netlify.'; })
         .then(function(){ postBtn.disabled=false; postBtn.textContent='Post update'; });
     }
-    wrap.addEventListener('click', function(e){ var b=e.target.closest && e.target.closest('.post-del'); if(!b) return; var ok=true; try{ ok=confirm('Delete this post?'); }catch(x){} if(!ok) return; fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',id:b.getAttribute('data-id'),key:ADMIN_KEY})}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){ render(d.posts); }).catch(function(){}); });
+    wrap.addEventListener('click', function(e){
+      var lk=e.target.closest && e.target.closest('.post-like');
+      if(lk){ var lid=lk.getAttribute('data-id'), on=!!LIKED[lid];
+        if(on){ delete LIKED[lid]; } else { LIKED[lid]=1; } saveLiked();
+        fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'like',id:lid,delta:on?-1:1})})
+          .then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){ render(d.posts); })
+          .catch(function(){ if(on){ LIKED[lid]=1; } else { delete LIKED[lid]; } saveLiked(); });
+        return; }
+      var b=e.target.closest && e.target.closest('.post-del'); if(!b) return; var ok=true; try{ ok=confirm('Delete this post?'); }catch(x){} if(!ok) return; fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',id:b.getAttribute('data-id'),key:ADMIN_KEY})}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){ render(d.posts); }).catch(function(){}); });
     postBtn.addEventListener('click', post);
     load();
   })();
