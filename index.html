@@ -1001,7 +1001,7 @@
     function rel(ts){ var s=Math.floor((Date.now()-ts)/1000); if(s<60)return'just now'; var m=Math.floor(s/60); if(m<60)return m+'m ago'; var h=Math.floor(m/60); if(h<24)return h+'h ago'; var d=Math.floor(h/24); if(d<7)return d+'d ago'; return new Date(ts).toLocaleDateString(); }
     function render(posts){
       if(!posts||!posts.length){ wrap.innerHTML='<p class="news-empty">No posts yet — share the first update!</p>'; return; }
-      wrap.innerHTML=posts.map(function(p){ return '<div class="post">'+(isAdmin?'<button class="post-del" data-id="'+esc(p.id)+'" aria-label="Delete">\u2715</button>':'')+'<div class="post-head"><span class="post-name">'+esc(p.name)+'</span><span class="post-time">'+rel(p.ts)+'</span></div><div class="post-text">'+esc(p.text)+'</div></div>'; }).join('');
+      wrap.innerHTML=posts.map(function(p){ return '<div class="post">'+(isAdmin?'<button class="post-del" data-id="'+esc(p.id)+'" aria-label="Delete">\u2715</button>':'')+'<div class="post-head"><span class="post-name">'+esc(p.name)+'</span><span class="post-time">'+rel(p.ts)+'</span></div><div class="post-text">'+esc(p.text)+'</div><div class="post-foot"><button type="button" class="post-like'+(LIKED[p.id]?' on':'')+'" data-id="'+esc(p.id)+'" aria-label="Like this update">'+(LIKED[p.id]?'\u2665':'\u2661')+' <b>'+(p.likes||0)+'</b></button></div></div>'; }).join('');
     }
     function load(){ fetch(API).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){ render(d.posts); if(note)note.textContent=''; }).catch(function(){ if(note)note.textContent='The news wall goes live once the site is deployed to Netlify.'; }); }
     function post(){
